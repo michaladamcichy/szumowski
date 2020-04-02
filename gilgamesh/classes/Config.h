@@ -49,91 +49,167 @@ enum ConfigVec3 {
 
 class Config {
 private:
+	static Config* config;
 
 	unordered_map <ConfigFloat, float> floats;
 	unordered_map <ConfigInt, int> ints;
 	unordered_map <ConfigString, string> strings;
 	unordered_map <ConfigBool, bool> bools;
 	unordered_map <ConfigVec3, vec3> vec3s;
-
-	int screenWidth = 1200;
-	int screenHeight = 720;
-	int toggleKeyInertia = 100;
-	int frameDelay = 15;
-
-	string windowTitle = "szumowski";
-	string texturesPath = "assets/textures/";
-	string modelsPath = "assets/models/";
-	string shadersPath = "shaders/";
-	
-	float mouseSensitivity = 0.001;
-	float playerSpeed = 0.1;
-	float playerBoost = 5;
-	float cameraFov = 45;
-	float cameraNearPlane = 0.1;
-	float cameraFarPlane = 400;
-	float cameraMinPitch = -Constants::HALF_PI + 0.1;
-	float cameraMaxPitch = Constants::HALF_PI - 0.01;
-	float cameraSpeed = 0.1;
-	float cameraBoost = 5;
-	
-	bool logEnabled = true;
-	
-	vec3 groundDimensions = vec3(1000, 1000, 1000); //ALERT zrobilem uniformowe skalowanie, zeby nie psuc normalnych
-	vec3 playerInitialPosition = vec3(0, 0, 0);
-
-	CameraMode cameraMode = CAMERA_PLAYER;
+	unordered_map <int, int> others;
 
 public:
-	void set(ConfigFloat variableName, float value) {
+	static void init() {
+		config = new Config();
+	}
+
+	static void cleanUp() {
+		delete config;
+	}
+
+	Config() {
+		ints[SCREEN_WIDTH] = 1200;
+		ints[SCREEN_HEIGHT] = 720;
+		ints[TOGGLE_KEY_INERTIA] = 100;
+		ints[FRAME_DELAY] = 15;
+
+		strings[WINDOW_TITLE] = "SZUMOWSKI";
+		strings[TEXTURES_PATH] = "assets/textures/";
+		strings[MODELS_PATH] = "assets/models/";
+		strings[SHADERS_PATH] = "shaders/";
+
+		floats[MOUSE_SENSITIVITY] = 0.001;
+		floats[PLAYER_SPEED] = 0.1;
+		floats[PLAYER_BOOST] = 5;
+		floats[CAMERA_FOV] = 45;
+		floats[CAMERA_NEAR_PLANE] = 0.1;
+		floats[CAMERA_FAR_PLANE] = 400;
+		floats[CAMERA_MIN_PITCH] = -Constants::HALF_PI + 0.1;
+		floats[CAMERA_MAX_PITCH] = Constants::HALF_PI - 0.01;
+		floats[CAMERA_SPEED] = 0.1;
+		floats[CAMERA_BOOST] = 5;
+
+		bools[LOG_ENABLED] = true;
+
+		vec3s[GROUND_DIMENSIONS] = vec3(1000, 1000, 1000); //ALERT ZROBILEM UNIFORMOWE SKALOWANIE, ZEBY NIE PSUC NORMALNYCH
+		vec3s[PLAYER_INITIAL_POSITION] = vec3(0, 0, 0);
+
+		others[CAMERA_MODE] = CAMERA_PLAYER;
+	}
+
+public:
+	void setNS(ConfigFloat variableName, float value) {
 		floats[variableName] = value;
 	}
 
-	void set(ConfigInt variableName, int value) {
+	void setNS(ConfigInt variableName, int value) {
 		ints[variableName] = value;
 	}
 
-	void set(ConfigString variableName, string value) {
+	void setNS(ConfigString variableName, string value) {
 		strings[variableName] = value;
 	}
 
-	void set(ConfigCameraMode variableName, CameraMode value) {
-		cameraMode = value;
-	}
-
-	void set(ConfigBool variableName, bool value) {
+	void setNS(ConfigBool variableName, bool value) {
 		bools[variableName] = value;
 	}
 
-	void set(ConfigVec3 variableName, vec3 value) {
+	void setNS(ConfigVec3 variableName, vec3 value) {
 		vec3s[variableName] = value;
 	}
+
+	void setNS(int variableName, int value) {
+		others[variableName] = value;
+	}
 	
-	float get(ConfigFloat variableName) {
+	//
+
+	float getNS(ConfigFloat variableName) {
 		return floats[variableName];
 	}
 
-	int get(ConfigInt variableName) {
+	int getNS(ConfigInt variableName) {
 		return ints[variableName];
 	}
 
-	string get(ConfigString variableName) {
+	string getNS(ConfigString variableName) {
 		return strings[variableName];
 	}
 
-	CameraMode get(ConfigCameraMode variableName) {
-		return cameraMode;
-	}
-
-	bool get(ConfigBool variableName) {
-		return bools[variableName];
-	}
-	
-	vec3 get(ConfigVec3 variableName) {
+	vec3 getNS(ConfigVec3 variableName) {
 		return vec3s[variableName];
 	}
+
+	bool getNS(ConfigBool variableName) {
+		return bools[variableName];
+	}
+
+	int getNS(int variableName) {
+		return others[variableName];
+	}
+
+	//
+
+	static void set(ConfigFloat variableName, float value) {
+		config->setNS(variableName, value);
+	}
+
+	static void set(ConfigInt variableName, int value) {
+		config->setNS(variableName, value);
+	}
+
+	static void set(ConfigString variableName, string value) {
+		config->setNS(variableName, value);
+	}
+
+	static void set(ConfigCameraMode variableName, CameraMode value) {
+		config->setNS(variableName, value);
+	}
+
+	static void set(ConfigBool variableName, bool value) {
+		config->setNS(variableName, value);
+	}
+
+	static void set(ConfigVec3 variableName, vec3 value) {
+		config->setNS(variableName, value);
+	}
+
+	static void set(int variableName, int value) {
+		config->setNS(variableName, value);
+	}
+	//
+
+	static float get(ConfigFloat variableName) {
+		return config->getNS(variableName);
+	}
+
+	static int get(ConfigInt variableName) {
+		return config->getNS(variableName);
+	}
+
+	static string get(ConfigString variableName) {
+		return config->getNS(variableName);
+	}
+
+	static bool get(ConfigBool variableName) {
+		return config->getNS(variableName);
+	}
+
+	static vec3 get(ConfigVec3 variableName) {
+		return config->getNS(variableName);
+	}
+
+	static int get(int variableName) {
+		return config->getNS(variableName);
+	}
 	 
-	void toggleCameraMode() {
-		cameraMode == CAMERA_GLOBAL ? cameraMode = CAMERA_PLAYER : cameraMode = CAMERA_GLOBAL;
+	void toggleCameraModeNS() {
+		others[CAMERA_MODE] == CAMERA_GLOBAL ? others[CAMERA_MODE] = CAMERA_PLAYER : others[CAMERA_MODE] = CAMERA_GLOBAL;
+	}
+
+	static void toggleCameraMode() {
+		config->toggleCameraModeNS();
 	}
 };
+
+Config* Config::config;

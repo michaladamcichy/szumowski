@@ -15,7 +15,7 @@ public:
 
 public:
 	Player() {
-		position = Config::getPlayerInitialPosition();
+		position = Config::get(PLAYER_INITIAL_POSITION);
 		vec3 cameraTranslation = position;
 		cameraTranslation.y = height;
 		camera.move(cameraTranslation);
@@ -34,7 +34,7 @@ public:
 	}
 
 	void handleInput(Mouse& mouse, Keyboard& keyboard) {
-		camera.rotate(-mouse.getMovement().y * Config::getMouseSensitivity(), mouse.getMovement().x * Config::getMouseSensitivity());
+		camera.rotate(-mouse.getMovement().y * Config::get(MOUSE_SENSITIVITY), mouse.getMovement().x * Config::get(MOUSE_SENSITIVITY));
 
 		vec3 forward = glm::normalize(glm::cross(Directions::UP, camera.getRight()));
 		vec3 left = camera.getLeft();
@@ -44,20 +44,20 @@ public:
 		float boost = 1;
 
 		if (keyboard.isShiftPressed()) {
-			boost = Config::getPlayerBoost();
+			boost = Config::get(PLAYER_BOOST);
 		}
 
 		if (keyboard.isUpPressed()) {
-			position += forward * Config::getPlayerSpeed() * boost;
+			position += forward * Config::get(PLAYER_SPEED) * boost;
 		}
 		if (keyboard.isDownPressed()) {
-			position += back * Config::getPlayerSpeed() * boost;
+			position += back * Config::get(PLAYER_SPEED) * boost;
 		}
 		if (keyboard.isLeftPressed()) {
-			position += left * Config::getPlayerSpeed() * boost;
+			position += left * Config::get(PLAYER_SPEED) * boost;
 		}
 		if (keyboard.isRightPressed()) {
-			position += right * Config::getPlayerSpeed() * boost;
+			position += right * Config::get(PLAYER_SPEED) * boost;
 		}
 
 		if (keyboard.isLeftMousePressed()) {

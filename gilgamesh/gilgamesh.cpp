@@ -15,7 +15,9 @@
 
 int main(int argc, char** argv)
 {
-	if (Config::isLogEnabled() == true) {
+	Config::init();
+
+	if (Config::get(LOG_ENABLED) == true) {
 		Log::enable();
 	}
 	else {
@@ -49,5 +51,7 @@ int main(int argc, char** argv)
 	}
 
 	GLFW::exit();
+	Config::cleanUp();
+
 	return 0;
 }

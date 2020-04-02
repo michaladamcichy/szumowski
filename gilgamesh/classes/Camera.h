@@ -41,10 +41,10 @@ public:
 
 	mat4 getPerspective() {
 		return  glm::perspective(
-			glm::radians(Config::getCameraFov()),
-			float(Config::getScreenWidth()) / float(Config::getScreenHeight()),
-			Config::getCameraNearPlane(),
-			Config::getCameraFarPlane()
+			glm::radians(Config::get(CAMERA_FOV)),
+			float(Config::get(SCREEN_WIDTH)) / float(Config::get(SCREEN_HEIGHT)),
+			Config::get(CAMERA_NEAR_PLANE),
+			Config::get(CAMERA_FAR_PLANE)
 		);
 	}
 
@@ -56,11 +56,11 @@ public:
 		pitch += pitchOffset;
 		yaw += yawOffset;
 
-		if (pitch > Config::getCameraMaxPitch()) {
-			pitch = Config::getCameraMaxPitch();
+		if (pitch > Config::get(CAMERA_MAX_PITCH)) {
+			pitch = Config::get(CAMERA_MAX_PITCH);
 		}
-		else if (pitch < Config::getCameraMinPitch()) {
-			pitch = Config::getCameraMinPitch();
+		else if (pitch < Config::get(CAMERA_MIN_PITCH)) {
+			pitch = Config::get(CAMERA_MIN_PITCH);
 		}
 
 		if (yaw > Constants::DOUBLE_PI) {
@@ -74,11 +74,11 @@ public:
 	}
 
 	void handleInput(Mouse& mouse, Keyboard& keyboard) {
-		this->rotate(-mouse.getMovement().y * Config::getMouseSensitivity(), mouse.getMovement().x * Config::getMouseSensitivity());
+		this->rotate(-mouse.getMovement().y * Config::get(MOUSE_SENSITIVITY), mouse.getMovement().x * Config::get(MOUSE_SENSITIVITY));
 
-		float speed = Config::getCameraSpeed();
+		float speed = Config::get(CAMERA_SPEED);
 		if (keyboard.isShiftPressed()) {
-			speed *= Config::getCameraBoost();
+			speed *= Config::get(CAMERA_BOOST);
 		}
 
 		if (keyboard.isUpPressed()) {

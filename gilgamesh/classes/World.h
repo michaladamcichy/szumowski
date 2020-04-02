@@ -23,7 +23,7 @@ public:
 	}
 
 	void handleInput(Mouse& mouse, Keyboard& keyboard) {
-		if (Config::getCameraMode() == CAMERA_GLOBAL) {
+		if (Config::get(CAMERA_MODE) == CAMERA_GLOBAL) {
 			globalCamera.handleInput(mouse, keyboard);
 		}
 		else {
@@ -37,7 +37,7 @@ public:
 
 private:
 	Camera& getActiveCamera() {
-		if (Config::getCameraMode() == CAMERA_GLOBAL) {
+		if (Config::get(CAMERA_MODE) == CAMERA_GLOBAL) {
 			return globalCamera;
 		}
 		else {

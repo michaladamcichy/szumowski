@@ -9,8 +9,8 @@ private:
 public:
 	static void framebuffer_size_callback(GLFWwindow* window, int width, int height) {
 		glViewport(0, 0, width, height);
-		Config::setScreenWidth(width);
-		Config::setScreenHeight(height);
+		Config::set(SCREEN_WIDTH, width);
+		Config::set(SCREEN_HEIGHT, height);
 	}
 
 	static bool init() {
@@ -20,9 +20,9 @@ public:
 		glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
 		window = glfwCreateWindow(
-			Config::getScreenWidth(),
-			Config::getScreenHeight(),
-			Config::getWindowTitle().c_str(),
+			Config::get(SCREEN_WIDTH),
+			Config::get(SCREEN_HEIGHT),
+			Config::get(WINDOW_TITLE).c_str(),
 			NULL,
 			NULL);
 
