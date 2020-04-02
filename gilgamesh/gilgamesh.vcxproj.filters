@@ -1,0 +1,151 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Resource Files\Shaders">
+      <UniqueIdentifier>{a05f7d38-0bd1-4c51-993f-3644d5c18070}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\static">
+      <UniqueIdentifier>{6ab3b374-919a-43b2-a441-0ea828a19752}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\structures">
+      <UniqueIdentifier>{79305c2d-8531-43fb-b56b-b4008f41f272}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\nonstatic">
+      <UniqueIdentifier>{bb590eeb-de33-4265-ab25-0099fa67d694}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\interfaces">
+      <UniqueIdentifier>{b9a02847-32ed-48c9-830f-07ba12ec116f}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="gilgamesh.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="glad.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="stb_image.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="vs.sprite.glsl">
+      <Filter>Resource Files\Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="classes\stdafx.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="classes\Config.h">
+      <Filter>Header Files\static</Filter>
+    </ClInclude>
+    <ClInclude Include="classes\Constants.h">
+      <Filter>Header Files\static</Filter>
+    </ClInclude>
+    <ClInclude Include="classes\ErrorHandler.h">
+      <Filter>Header Files\static</Filter>
+    </ClInclude>
+    <ClInclude Include="classes\GLFW.h">
+      <Filter>Header Files\static</Filter>
+    </ClInclude>
+    <ClInclude Include="classes\Importer.h">
+      <Filter>Header Files\static</Filter>
+    </ClInclude>
+    <ClInclude Include="classes\Log.h">
+      <Filter>Header Files\static</Filter>
+    </ClInclude>
+    <ClInclude Include="classes\MathsUtils.h">
+      <Filter>Header Files\static</Filter>
+    </ClInclude>
+    <ClInclude Include="classes\Primitives.h">
+      <Filter>Header Files\static</Filter>
+    </ClInclude>
+    <ClInclude Include="classes\Renderer.h">
+      <Filter>Header Files\static</Filter>
+    </ClInclude>
+    <ClInclude Include="classes\Vertex.h">
+      <Filter>Header Files\structures</Filter>
+    </ClInclude>
+    <ClInclude Include="classes\Lighting.h">
+      <Filter>Header Files\structures</Filter>
+    </ClInclude>
+    <ClInclude Include="classes\TimeManager.h">
+      <Filter>Header Files\static</Filter>
+    </ClInclude>
+    <ClInclude Include="classes\Camera.h">
+      <Filter>Header Files\nonstatic</Filter>
+    </ClInclude>
+    <ClInclude Include="classes\GameObject.h">
+      <Filter>Header Files\nonstatic</Filter>
+    </ClInclude>
+    <ClInclude Include="classes\Mesh.h">
+      <Filter>Header Files\nonstatic</Filter>
+    </ClInclude>
+    <ClInclude Include="classes\Keyboard.h">
+      <Filter>Header Files\nonstatic</Filter>
+    </ClInclude>
+    <ClInclude Include="classes\World.h">
+      <Filter>Header Files\nonstatic</Filter>
+    </ClInclude>
+    <ClInclude Include="classes\Texture.h">
+      <Filter>Header Files\nonstatic</Filter>
+    </ClInclude>
+    <ClInclude Include="classes\Shader.h">
+      <Filter>Header Files\nonstatic</Filter>
+    </ClInclude>
+    <ClInclude Include="classes\Player.h">
+      <Filter>Header Files\nonstatic</Filter>
+    </ClInclude>
+    <ClInclude Include="classes\Mouse.h">
+      <Filter>Header Files\nonstatic</Filter>
+    </ClInclude>
+    <ClInclude Include="Colors.h">
+      <Filter>Header Files\static</Filter>
+    </ClInclude>
+    <ClInclude Include="Drawable.h">
+      <Filter>Header Files\interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="InputHandler.h">
+      <Filter>Header Files\interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="Light.h">
+      <Filter>Header Files\nonstatic</Filter>
+    </ClInclude>
+    <ClInclude Include="Directions.h">
+      <Filter>Header Files\static</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="vs.glsl">
+      <Filter>Resource Files\Shaders</Filter>
+    </None>
+    <None Include="fs.glsl">
+      <Filter>Resource Files\Shaders</Filter>
+    </None>
+    <None Include="fs.sprite.glsl">
+      <Filter>Resource Files\Shaders</Filter>
+    </None>
+    <None Include="vs.2d.glsl">
+      <Filter>Resource Files\Shaders</Filter>
+    </None>
+    <None Include="fs.2d.glsl">
+      <Filter>Resource Files\Shaders</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Uwagi.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+  </ItemGroup>
+</Project>
