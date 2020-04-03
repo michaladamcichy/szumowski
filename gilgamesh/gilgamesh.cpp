@@ -30,6 +30,7 @@ int main(int argc, char** argv)
 	Mouse mouse;
 	Keyboard keyboard;
 
+	Primitives::init();
 	//World world;
 	
 	while (!glfwWindowShouldClose(GLFW::getWindow())) {

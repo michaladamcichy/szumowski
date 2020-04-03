@@ -69,7 +69,7 @@ public:
 		shader->setUniform("cameraDirection", vec3(0, 0, -1));
 
 		glBindVertexArray(vao);
-		glDrawElements(GL_TRIANGLES, Primitives::Cube::getIndices().size(), GL_UNSIGNED_INT, 0);
+		glDrawElements(GL_TRIANGLES, Primitives::cube->getIndices().size(), GL_UNSIGNED_INT, 0);
 
 		glBindVertexArray(0);
 
@@ -115,7 +115,7 @@ public:
 
 	static void updateBuffer() {
 		Log::print("UPDATING BUFFER");
-		vector<Vertex> vertices = Primitives::Cube::getVertices();
+		//vector<Vertex> vertices = Primitives::cube->getVertices();
 		
 		glBindVertexArray(vao);
 
@@ -123,16 +123,16 @@ public:
 		glBufferSubData(
 			GL_ARRAY_BUFFER,
 			0,
-			Primitives::Cube::getVertices().size() * sizeof(Vertex),
-			&Primitives::Cube::getVertices()[0]
+			Primitives::cube->getVertices().size() * sizeof(Vertex),
+			&Primitives::cube->getVertices()[0]
 		);
 
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
 		glBufferSubData(
 			GL_ELEMENT_ARRAY_BUFFER,
 			0,
-			Primitives::Cube::getIndices().size() * sizeof(uint),
-			&Primitives::Cube::getIndices()[0]
+			Primitives::cube->getIndices().size() * sizeof(uint),
+			&Primitives::cube->getIndices()[0]
 		);
 
 		glBindVertexArray(0);

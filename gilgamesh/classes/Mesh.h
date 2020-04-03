@@ -24,7 +24,7 @@ private:
 public:
 	Mesh() {}
 
-	Mesh(vector <Vertex> vertices, vector <uint> indices, Texture* texture, Shader* shader) {
+	Mesh(vector <Vertex> vertices, vector <uint> indices, Texture* texture = NULL, Shader* shader = NULL) {
 		this->vertices = vertices;
 		this->indices = indices;
 		this->texture = texture;
@@ -35,6 +35,17 @@ public:
 		this->origin = origin;
 		this->texture = texture;
 		this->shader = shader;
+
+		vertices = origin->vertices;
+		indices = origin->indices;
+	}
+
+	vector <Vertex>& getVertices() {
+		return vertices;
+	}
+
+	vector <uint> getIndices() {
+		return indices;
 	}
 
 	void update(mat4 transformation) {
