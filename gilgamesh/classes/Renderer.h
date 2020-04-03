@@ -52,8 +52,6 @@ public:
 	}
 
 	static void renderQueue() {
-		Log::print("Rendering queue");
-
 		Shader::getMainShader()->use();
 		Shader::getMainShader()->setUniform("near", Config::get(CAMERA_NEAR_PLANE));
 		Shader::getMainShader()->setUniform("far", Config::get(CAMERA_FAR_PLANE));
@@ -67,7 +65,6 @@ public:
 		glBindVertexArray(0);
 
 		ErrorHandler::handleErrors();
-		Log::print("DONE");
 	}
 
 	static void prepareBuffer() {
@@ -107,31 +104,33 @@ public:
 	}
 
 	static void updateBuffer() {
-		Log::print("UPDATING BUFFER");
 		//vector<Vertex> vertices = Primitives::getCube()->getVertices();
 		
+		Mesh* mesh = queue[0];
+		//vector<Vertex> vertices = queue[0]->getVertices();
+		//vector<uint> indices = queue[0]->getIndices();
+
 		glBindVertexArray(vao);
 
 		glBindBuffer(GL_ARRAY_BUFFER, vbo);
 		glBufferSubData(
 			GL_ARRAY_BUFFER,
 			0,
-			Primitives::getCube()->getVertices().size() * sizeof(Vertex),
-			&Primitives::getCube()->getVertices()[0]
+			mesh->getVertices().size() * sizeof(Vertex),
+			&mesh->getVertices()[0]
 		);
 
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
 		glBufferSubData(
 			GL_ELEMENT_ARRAY_BUFFER,
 			0,
-			Primitives::getCube()->getIndices().size() * sizeof(uint),
-			&Primitives::getCube()->getIndices()[0]
+			mesh->getIndices().size() * sizeof(uint),
+			&mesh->getIndices()[0]
 		);
 
 		glBindVertexArray(0);
 
 		ErrorHandler::handleErrors();
-		Log::print("DONE");
 	}
 };
 

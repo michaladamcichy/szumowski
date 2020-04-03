@@ -27,7 +27,6 @@ void init() {
 	Renderer::init();
 	Primitives::init();
 	Shader::init();
-
 }
 
 int main(int argc, char** argv)
@@ -50,7 +49,7 @@ int main(int argc, char** argv)
 
 		Renderer::clear();
 
-		//world.draw();
+		world.draw();
 		Renderer::render();
 
 		GLFW::updateScreen();  
