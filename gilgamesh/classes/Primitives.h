@@ -7,9 +7,9 @@
 #include "Shader.h"
 
 class Primitives {
-public:
+private:
 	static Mesh* cube;
-
+public:
 	/*namespace Plane {
 		vector <Vertex> vertices{
 				Vertex(vec3(-0.5f, 0.0f, -0.5f), vec2(0.0f, 0.0f), vec3(0.0f, 1.0f, 0.0f)),
@@ -81,6 +81,10 @@ public:
 		};
 
 		cube = new Mesh(vertices, indices);
+	}
+
+	static Mesh* getCube() {
+		return cube;
 	}
 
 	//	vector <Vertex>& getVertices() {
