@@ -14,9 +14,6 @@ private:
 
 	static int bufferSize;
 
-	//alert
-	static Texture* texture;
-	static Shader* shader;
 
 public:
 	static void init() {
@@ -30,10 +27,6 @@ public:
 		glFrontFace(GL_CW);
 
 		bufferSize = 100;
-
-		//alert
-		texture = new Texture(Config::get(TEXTURES_PATH) + "sun_diffuse.png");
-		shader = new Shader(Config::get(SHADERS_PATH) + "vs.glsl", Config::get(SHADERS_PATH) + "fs.glsl");
 
 		prepareBuffer();
 		Log::print("DONE");
@@ -61,12 +54,12 @@ public:
 	static void renderQueue() {
 		Log::print("Rendering queue");
 
-		shader->use();
-		shader->setUniform("near", Config::get(CAMERA_NEAR_PLANE));
-		shader->setUniform("far", Config::get(CAMERA_FAR_PLANE));
+		Shader::getMainShader()->use();
+		Shader::getMainShader()->setUniform("near", Config::get(CAMERA_NEAR_PLANE));
+		Shader::getMainShader()->setUniform("far", Config::get(CAMERA_FAR_PLANE));
 
-		shader->setUniform("cameraPosition", vec3(0, 0, 1));
-		shader->setUniform("cameraDirection", vec3(0, 0, -1));
+		Shader::getMainShader()->setUniform("cameraPosition", vec3(0, 0, 1));
+		Shader::getMainShader()->setUniform("cameraDirection", vec3(0, 0, -1));
 
 		glBindVertexArray(vao);
 		glDrawElements(GL_TRIANGLES, Primitives::getCube()->getIndices().size(), GL_UNSIGNED_INT, 0);
@@ -147,6 +140,3 @@ int Renderer::bufferSize;
 uint Renderer::vao;
 uint Renderer::vbo;
 uint Renderer::ebo;
-
-Texture* Renderer::texture;
-Shader* Renderer::shader;

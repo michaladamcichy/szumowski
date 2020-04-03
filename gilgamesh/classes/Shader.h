@@ -8,8 +8,16 @@
 class Shader {
 private:
 	uint id;
-
+	static Shader* shader;
 public:
+	static Shader* getMainShader() {
+		return shader;
+	}
+
+	static void init() {
+		shader = new Shader(Config::get(SHADERS_PATH) + "vs.glsl", Config::get(SHADERS_PATH) + "fs.glsl");
+	}
+
 	Shader() {
 	}
 
@@ -140,3 +148,5 @@ private:
 		delete[] log;
 	}
 };
+
+Shader* Shader::shader;
