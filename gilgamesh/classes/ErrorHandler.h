@@ -9,7 +9,7 @@ class ErrorHandler {
 public:
 	static void handleErrors() {
 		GLenum error = glGetError();
-		if (error != GL_NO_ERROR && error != lastError) {
+		if (error != GL_NO_ERROR /*&& error != lastError*/) {
 			lastError = error;
 			cout << "GL_ERROR code: " << error << '\n';
 		}

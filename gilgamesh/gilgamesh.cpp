@@ -30,7 +30,7 @@ int main(int argc, char** argv)
 	Mouse mouse;
 	Keyboard keyboard;
 
-	World world;
+	//World world;
 	
 	while (!glfwWindowShouldClose(GLFW::getWindow())) {
 		GLFW::handleInput();
@@ -39,13 +39,14 @@ int main(int argc, char** argv)
 		mouse.readInput();
 		keyboard.readInput();
 		
-		world.handleInput(mouse, keyboard);
+		//world.handleInput(mouse, keyboard);
 
 		Renderer::clear();
 
-		world.draw();
+		//world.draw();
+		Renderer::render();
 
-		glfwSwapBuffers(GLFW::getWindow());
+		GLFW::updateScreen();  
 
 		ErrorHandler::handleErrors();
 	}

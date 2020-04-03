@@ -2,6 +2,9 @@
 
 #include "stdafx.h"
 #include "Vertex.h"
+#include "Mesh.h"
+#include "Texture.h"
+#include "Shader.h"
 
 namespace Primitives {
 	namespace Plane {
@@ -84,7 +87,7 @@ namespace Primitives {
 	}
 
 	namespace Quad {
-		vector <Vertex> vertices{
+		vector <Vertex> vertices{ //ALERT!!
 		Vertex(vec3(1.0f,  1.0f, 0.0f),   vec2(1.0f, 1.0f), vec3(0,0,1)),
 		Vertex(vec3(1.0f, -1.0f, 0.0f),   vec2(1.0f, 0.0f), vec3(0,0,1)),
 		Vertex(vec3(-1.0f, -1.0f, 0.0f),   vec2(0.0f, 0.0f), vec3(0,0,1)),

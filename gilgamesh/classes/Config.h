@@ -73,7 +73,7 @@ public:
 		ints[TOGGLE_KEY_INERTIA] = 100;
 		ints[FRAME_DELAY] = 15;
 
-		strings[WINDOW_TITLE] = "SZUMOWSKI";
+		strings[WINDOW_TITLE] = "Szumowski";
 		strings[TEXTURES_PATH] = "assets/textures/";
 		strings[MODELS_PATH] = "assets/models/";
 		strings[SHADERS_PATH] = "shaders/";

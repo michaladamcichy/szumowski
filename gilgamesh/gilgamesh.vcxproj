@@ -163,17 +163,13 @@
     <ClInclude Include="Drawable.h" />
     <ClInclude Include="InputHandler.h" />
     <ClInclude Include="Light.h" />
-    <ClInclude Include="vs.sprite.glsl" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="fs.2d.glsl" />
-    <None Include="fs.glsl" />
-    <None Include="fs.sprite.glsl" />
-    <None Include="vs.2d.glsl" />
-    <None Include="vs.glsl" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Uwagi.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="shaders\fs.glsl" />
+    <None Include="shaders\vs.glsl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

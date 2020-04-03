@@ -42,6 +42,10 @@ public:
 		glfwTerminate();
 	}
 
+	static void updateScreen() {
+		glfwSwapBuffers(window);
+	}
+
 	static void handleInput() {
 		glfwPollEvents();
 

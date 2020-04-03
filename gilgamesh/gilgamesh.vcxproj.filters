@@ -41,9 +41,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="vs.sprite.glsl">
-      <Filter>Resource Files\Shaders</Filter>
-    </ClInclude>
     <ClInclude Include="classes\stdafx.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -127,25 +124,16 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="vs.glsl">
-      <Filter>Resource Files\Shaders</Filter>
-    </None>
-    <None Include="fs.glsl">
-      <Filter>Resource Files\Shaders</Filter>
-    </None>
-    <None Include="fs.sprite.glsl">
-      <Filter>Resource Files\Shaders</Filter>
-    </None>
-    <None Include="vs.2d.glsl">
-      <Filter>Resource Files\Shaders</Filter>
-    </None>
-    <None Include="fs.2d.glsl">
-      <Filter>Resource Files\Shaders</Filter>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
     <Text Include="Uwagi.txt">
       <Filter>Resource Files</Filter>
     </Text>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="shaders\fs.glsl">
+      <Filter>Resource Files\Shaders</Filter>
+    </None>
+    <None Include="shaders\vs.glsl">
+      <Filter>Resource Files\Shaders</Filter>
+    </None>
   </ItemGroup>
 </Project>

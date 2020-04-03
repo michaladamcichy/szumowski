@@ -37,7 +37,7 @@ public:
 		this->shader = shader;
 	}
 
-	void draw(Camera& camera, vector <Light>& lights) {
+	void update(mat4 transformation) {
 
 	}
 };
