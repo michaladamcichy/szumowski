@@ -7,10 +7,13 @@ out vec2 uv;
 out vec3 normal;
 out vec4 fragmentPosition;
 
+uniform mat4 cameraTransformation;
+uniform mat3 cameraRotations;
+
 void main() {
-	gl_Position = vec4(inPosition, 1.0);
+	gl_Position = cameraTransformation * vec4(inPosition, 1.0);
 	
 	uv = inUv;
-	normal =  normalize(inNormal);
+	normal =  normalize(/*cameraRotations **/ inNormal); //ALERT! nie testowane
 	fragmentPosition = vec4(inPosition, 1.0);
 };

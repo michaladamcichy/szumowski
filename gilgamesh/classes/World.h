@@ -39,16 +39,17 @@ public:
 
 
 	void draw() {
+		Renderer::attachCamera(this->getActiveCamera());
 		Renderer::addToQueue(mesh);
 	}
 
 private:
-	Camera& getActiveCamera() {
+	Camera* getActiveCamera() {
 		if (Config::get(CAMERA_MODE) == CAMERA_GLOBAL) {
-			return globalCamera;
+			return &globalCamera;
 		}
 		else {
-			return player.getCamera();
+			return &player.getCamera();
 		}
 	}
 };

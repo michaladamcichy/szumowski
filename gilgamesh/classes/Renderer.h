@@ -14,6 +14,8 @@ private:
 
 	static int bufferSize;
 
+	static Camera* camera;
+
 
 public:
 	static void init() {
@@ -42,6 +44,10 @@ public:
 		glClear(GL_COLOR_BUFFER_BIT);
 	}
 
+	static void attachCamera(Camera* camera) {
+		Renderer::camera = camera;
+	}
+
 	static void addToQueue(Mesh* mesh) {
 		queue.push_back(mesh);
 	}
@@ -51,6 +57,7 @@ public:
 		renderQueue();
 	}
 
+
 	static void renderQueue() {
 		Shader::getMainShader()->use();
 		Shader::getMainShader()->setUniform("near", Config::get(CAMERA_NEAR_PLANE));
@@ -58,6 +65,8 @@ public:
 
 		Shader::getMainShader()->setUniform("cameraPosition", vec3(0, 0, 1));
 		Shader::getMainShader()->setUniform("cameraDirection", vec3(0, 0, -1));
+		Shader::getMainShader()->setUniform("cameraTransformation", camera->getTransformation());
+		Shader::getMainShader()->setUniform("cameraRotations", camera->getRotations());
 
 		glBindVertexArray(vao);
 		glDrawElements(GL_TRIANGLES, Primitives::getCube()->getIndices().size(), GL_UNSIGNED_INT, 0);
@@ -139,3 +148,4 @@ int Renderer::bufferSize;
 uint Renderer::vao;
 uint Renderer::vbo;
 uint Renderer::ebo;
+Camera* Renderer::camera;

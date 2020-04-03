@@ -49,6 +49,7 @@ int main(int argc, char** argv)
 
 		Renderer::clear();
 
+		world.handleInput(mouse, keyboard);
 		world.draw();
 		Renderer::render();
 
