@@ -24,8 +24,7 @@ public:
 		globalCamera = Camera(vec3(0, 10, 10));
 
 		texture = new Texture(Config::get(TEXTURES_PATH) + "sun_diffuse.png");
-		shader = new Shader(Config::get(SHADERS_PATH) + "vs.glsl", Config::get(SHADERS_PATH) + "fs.glsl");
-		mesh = new Mesh(Primitives::Cube::getVertices(), Primitives::Cube::getIndices(), texture, shader); //alert
+		mesh = new Mesh(Primitives::getCube(), texture); //alert
 	}
 
 	void handleInput(Mouse& mouse, Keyboard& keyboard) {
@@ -36,7 +35,6 @@ public:
 			player.handleInput(mouse, keyboard);
 		}
 	}
-
 
 	void draw() {
 		Renderer::addToQueue(mesh);

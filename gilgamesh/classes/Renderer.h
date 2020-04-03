@@ -13,10 +13,8 @@ private:
 	static uint ebo;
 
 	static int bufferSize;
-
-	//alert
-	static Texture* texture;
-	static Shader* shader;
+	static int bufferVertexCount;
+	static int bufferIndicesCount;
 
 public:
 	static void init() {
@@ -29,11 +27,9 @@ public:
 		//glEnable(GL_CULL_FACE);
 		glFrontFace(GL_CW);
 
-		bufferSize = 100;
-
-		//alert
-		texture = new Texture(Config::get(TEXTURES_PATH) + "sun_diffuse.png");
-		shader = new Shader(Config::get(SHADERS_PATH) + "vs.glsl", Config::get(SHADERS_PATH) + "fs.glsl");
+		bufferSize = 1000;
+		bufferVertexCount = 0;
+		bufferIndicesCount = 0;
 
 		prepareBuffer();
 		Log::print("DONE");
@@ -55,21 +51,14 @@ public:
 
 	static void render() {
 		updateBuffer();
-		renderQueue();
+		renderBuffer();
 	}
 
-	static void renderQueue() {
+	static void renderBuffer() {
 		Log::print("Rendering queue");
 
-		shader->use();
-		shader->setUniform("near", Config::get(CAMERA_NEAR_PLANE));
-		shader->setUniform("far", Config::get(CAMERA_FAR_PLANE));
-
-		shader->setUniform("cameraPosition", vec3(0, 0, 1));
-		shader->setUniform("cameraDirection", vec3(0, 0, -1));
-
 		glBindVertexArray(vao);
-		glDrawElements(GL_TRIANGLES, Primitives::Cube::getIndices().size(), GL_UNSIGNED_INT, 0);
+		glDrawElements(GL_TRIANGLES, Primitives::getCube()->getIndices().size(), GL_UNSIGNED_INT, 0);
 
 		glBindVertexArray(0);
 
@@ -115,27 +104,33 @@ public:
 
 	static void updateBuffer() {
 		Log::print("UPDATING BUFFER");
-		vector<Vertex> vertices = Primitives::Cube::getVertices();
 		
+		//if (queue.size() == 0) return; //ALERT
+		Mesh* mesh = queue[0];
+		bufferVertexCount = mesh->getVertices().size();
+		bufferIndicesCount = mesh->getIndices().size();
+
 		glBindVertexArray(vao);
 
 		glBindBuffer(GL_ARRAY_BUFFER, vbo);
 		glBufferSubData(
 			GL_ARRAY_BUFFER,
 			0,
-			Primitives::Cube::getVertices().size() * sizeof(Vertex),
-			&Primitives::Cube::getVertices()[0]
+			Primitives::getCube()->getVertices().size() * sizeof(Vertex),
+			&Primitives::getCube()->getVertices()[0]
 		);
 
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
 		glBufferSubData(
 			GL_ELEMENT_ARRAY_BUFFER,
 			0,
-			Primitives::Cube::getIndices().size() * sizeof(uint),
-			&Primitives::Cube::getIndices()[0]
+			Primitives::getCube()->getIndices().size() * sizeof(uint),
+			&Primitives::getCube()->getIndices()[0]
 		);
 
 		glBindVertexArray(0);
+
+		queue.clear();
 
 		ErrorHandler::handleErrors();
 		Log::print("DONE");
@@ -144,9 +139,8 @@ public:
 
 vector<Mesh*> Renderer::queue;
 int Renderer::bufferSize;
+int Renderer::bufferVertexCount;
+int Renderer::bufferIndicesCount;
 uint Renderer::vao;
 uint Renderer::vbo;
 uint Renderer::ebo;
-
-Texture* Renderer::texture;
-Shader* Renderer::shader;

@@ -19,25 +19,36 @@ private:
 	vector <uint> indices;
 
 	Texture* texture = NULL;
-	Shader* shader = NULL;
+	//Shader* shader = NULL;
 
 public:
 	Mesh() {}
 
-	Mesh(vector <Vertex> vertices, vector <uint> indices, Texture* texture, Shader* shader) {
+	Mesh(vector <Vertex> vertices, vector <uint> indices, Texture* texture = NULL/*, Shader* shader = NULL*/) {
 		this->vertices = vertices;
 		this->indices = indices;
 		this->texture = texture;
-		this->shader = shader;
+		//this->shader = shader;
 	}
 
-	Mesh(Mesh* origin, Texture* texture = NULL, Shader* shader = NULL) {
+	Mesh(Mesh* origin, Texture* texture = NULL/*, Shader* shader = NULL*/) {
 		this->origin = origin;
 		this->texture = texture;
-		this->shader = shader;
+		//this->shader = shader;
+
+		vertices = origin->getVertices();
+		indices = origin->getIndices();
 	}
 
 	void update(mat4 transformation) {
 
+	}
+
+	vector <Vertex>& getVertices() {
+		return vertices;
+	}
+
+	vector <uint>& getIndices() {
+		return indices;
 	}
 };

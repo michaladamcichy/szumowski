@@ -12,6 +12,7 @@
 #include "World.h"
 #include "TimeManager.h"
 #include "MathsUtils.h"
+#include "Primitives.h"
 
 int main(int argc, char** argv)
 {
@@ -30,7 +31,8 @@ int main(int argc, char** argv)
 	Mouse mouse;
 	Keyboard keyboard;
 
-	//World world;
+	Primitives::init();
+	World world;
 	
 	while (!glfwWindowShouldClose(GLFW::getWindow())) {
 		GLFW::handleInput();
@@ -43,7 +45,7 @@ int main(int argc, char** argv)
 
 		Renderer::clear();
 
-		//world.draw();
+		world.draw();
 		Renderer::render();
 
 		GLFW::updateScreen();  
@@ -52,6 +54,7 @@ int main(int argc, char** argv)
 	}
 
 	GLFW::exit();
+	Primitives::cleanUp();
 	Config::cleanUp();
 
 	return 0;

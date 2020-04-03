@@ -8,9 +8,21 @@
 class Shader {
 private:
 	uint id;
-
+	static Shader* mainShader;
 public:
-	Shader() {
+	
+	//ALERT
+	Shader* getMainShader() {
+		return mainShader;
+	}
+
+	//ALERT
+	void init() {
+		mainShader = new Shader(Config::get(SHADERS_PATH) + "vs.glsl", Config::get(SHADERS_PATH) + "fs.glsl");
+	}
+
+	void cleanUp() {
+		delete mainShader;
 	}
 
 	Shader(string vertexShaderPath, string fragmentShaderPath) {
@@ -140,3 +152,5 @@ private:
 		delete[] log;
 	}
 };
+
+Shader* Shader::mainShader;
