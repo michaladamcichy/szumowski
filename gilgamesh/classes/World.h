@@ -13,19 +13,29 @@ class World : public InputHandler {
 private:
 	Camera globalCamera;
 	Player player;
-	Mesh* mesh; //ALERT temp
-	Texture* texture;
-	Shader* shader;
-
+	
+	vector <GameObject*> objects;
 	vector <Light> lights {Light()};
+
+	bool alreadyUpdated = false;
 
 public:
 	World() {
 		globalCamera = Camera(vec3(0, 10, 10));
 
-		texture = new Texture(Config::get(TEXTURES_PATH) + "sun_diffuse.png");
-		shader = new Shader(Config::get(SHADERS_PATH) + "vs.glsl", Config::get(SHADERS_PATH) + "fs.glsl");
-		//mesh = new Mesh(Primitives::Cube::getVertices(), Primitives::Cube::getIndices(), texture, shader); //alert
+		int rows = 100;
+		int columns = 100;
+
+		float step = 2.0;
+
+		float distance = rows * step;
+
+		for (int r = 0; r < rows; r++) {
+			for (int c = 0; c < columns; c++) {
+				GameObject* object = new GameObject(Primitives::getCube(), vec3(r * step - distance/2, 0, c * step - distance/2));
+				objects.push_back(object);
+			}
+		}
 	}
 
 	void handleInput(Mouse& mouse, Keyboard& keyboard) {
@@ -37,18 +47,76 @@ public:
 		}
 	}
 
+	void update() {
+		int i = 0;
+		for (auto& object : objects) {
+			i++;
+			float change = i % 2 == 0 ? 0.1 : -0.1;
+			object->move(vec3(0, TimeManager::getFrameDuration() * change, 0));
+			float angle = i % 2 == 0 ? 5.0 : -5.0;
+			angle *= TimeManager::getFrameDuration();
+			object->rotate(0, angle, 0);
+		}
+
+		updateObjects();
+	}
 
 	void draw() {
-		Renderer::addToQueue(mesh);
+		Renderer::attachCamera(this->getActiveCamera());
+		
+		for (GameObject* object : objects) {
+			Renderer::addToQueue(object->getMesh());
+		}
 	}
 
 private:
-	Camera& getActiveCamera() {
+	void updateObjects() {
+		if (Config::get(DYNAMIC_RENDERING_ENABLED) == true || !alreadyUpdated) {
+
+			if (Config::get(MULTITHREADING_ENABLED) == true) {
+				int threadsCount = Config::get(THREADS_COUNT);
+				int work = objects.size() / threadsCount;
+
+				thread** threads = new thread * [threadsCount];
+
+
+				vector <GameObject*>* objects = &this->objects;
+
+				for (int i = 0; i < threadsCount - 1; i++) {
+					threads[i] = new thread([objects, i, threadsCount, work]() mutable {
+						for (int j = i * work; j < i * work + work; j++) {
+							(*objects)[j]->update();
+						}
+					});
+				}
+
+				threads[threadsCount - 1] = new thread([objects, threadsCount, work]() mutable {
+					for (int j = (threadsCount - 1) * work; j < objects->size(); j++) {
+						(*objects)[j]->update();
+					}
+				});
+
+				for (int i = 0; i < threadsCount; i++) {
+					threads[i]->join();
+				}
+
+				delete[] threads;
+			}
+			else {
+				for (GameObject* object : objects) {
+					object->update();
+				}
+			}
+			alreadyUpdated = true;
+		}
+	}
+
+	Camera* getActiveCamera() {
 		if (Config::get(CAMERA_MODE) == CAMERA_GLOBAL) {
-			return globalCamera;
+			return &globalCamera;
 		}
 		else {
-			return player.getCamera();
+			return &player.getCamera();
 		}
 	}
 };

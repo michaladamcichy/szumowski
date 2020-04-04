@@ -31,6 +31,10 @@ public:
 			cout << keyValue.first << " -> " << keyValue.second << '\n';
 		}
 	}
+
+	static void done() {
+		print("DONE");
+	}
 };
 
 bool Log::enabled = true;

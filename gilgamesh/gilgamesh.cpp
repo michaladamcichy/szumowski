@@ -13,10 +13,9 @@
 #include "TimeManager.h"
 #include "MathsUtils.h"
 
-int main(int argc, char** argv)
-{
+void init() {
 	Config::init();
-
+	
 	if (Config::get(LOG_ENABLED) == true) {
 		Log::enable();
 	}
@@ -26,14 +25,22 @@ int main(int argc, char** argv)
 
 	GLFW::init();
 	Renderer::init();
+	Primitives::init();
+	Shader::init();
+}
+
+int main(int argc, char** argv)
+{
+	init();
 
 	Mouse mouse;
 	Keyboard keyboard;
 
-	Primitives::init();
-	//World world;
+	World world;
 	
 	while (!glfwWindowShouldClose(GLFW::getWindow())) {
+		TimeManager::startCpu();
+
 		GLFW::handleInput();
 		TimeManager::handleTime();
 		
@@ -44,7 +51,12 @@ int main(int argc, char** argv)
 
 		Renderer::clear();
 
-		//world.draw();
+
+		world.handleInput(mouse, keyboard);
+		world.update();
+		world.draw();
+
+
 		Renderer::render();
 
 		GLFW::updateScreen();  

@@ -28,7 +28,8 @@ enum ConfigInt {
 	SCREEN_HEIGHT,
 	TOGGLE_KEY_INERTIA,
 	FRAME_DELAY,
-
+	TIME_MEASUREMENT_FREQUENCY,
+	THREADS_COUNT
 };
 
 enum ConfigString {
@@ -40,6 +41,8 @@ enum ConfigString {
 
 enum ConfigBool {
 	LOG_ENABLED,
+	DYNAMIC_RENDERING_ENABLED,
+	MULTITHREADING_ENABLED
 };
 
 enum ConfigVec3 {
@@ -68,10 +71,12 @@ public:
 	}
 
 	Config() {
-		ints[SCREEN_WIDTH] = 1200;
-		ints[SCREEN_HEIGHT] = 720;
+		ints[SCREEN_WIDTH] = 1920;
+		ints[SCREEN_HEIGHT] = 1080;
 		ints[TOGGLE_KEY_INERTIA] = 100;
 		ints[FRAME_DELAY] = 15;
+		ints[TIME_MEASUREMENT_FREQUENCY] = 100;
+		ints[THREADS_COUNT] = 12;
 
 		strings[WINDOW_TITLE] = "Szumowski";
 		strings[TEXTURES_PATH] = "assets/textures/";
@@ -90,6 +95,8 @@ public:
 		floats[CAMERA_BOOST] = 5;
 
 		bools[LOG_ENABLED] = true;
+		bools[DYNAMIC_RENDERING_ENABLED] = true;
+		bools[MULTITHREADING_ENABLED] = false;
 
 		vec3s[GROUND_DIMENSIONS] = vec3(1000, 1000, 1000); //ALERT ZROBILEM UNIFORMOWE SKALOWANIE, ZEBY NIE PSUC NORMALNYCH
 		vec3s[PLAYER_INITIAL_POSITION] = vec3(0, 0, 0);

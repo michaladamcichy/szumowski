@@ -3,21 +3,18 @@
 #include "stdafx.h"
 #include "Primitives.h"
 #include "Mesh.h"
+#include "RenderBuffer.h"
+#include "TimeManager.h"
 
 class Renderer {
 private:
 	static vector <Mesh*> queue;
 	
-	static uint vao;
-	static uint vbo;
-	static uint ebo;
+	static RenderBuffer buffer;
 
-	static int bufferSize;
+	static Camera* camera;
 
-	//alert
-	static Texture* texture;
-	static Shader* shader;
-
+	static bool alreadyUpdated;
 public:
 	static void init() {
 		Log::print("Initializing Renderer");
@@ -28,14 +25,9 @@ public:
 
 		//glEnable(GL_CULL_FACE);
 		glFrontFace(GL_CW);
+		
 
-		bufferSize = 100;
-
-		//alert
-		texture = new Texture(Config::get(TEXTURES_PATH) + "sun_diffuse.png");
-		shader = new Shader(Config::get(SHADERS_PATH) + "vs.glsl", Config::get(SHADERS_PATH) + "fs.glsl");
-
-		prepareBuffer();
+		buffer.init(1000000, 1000000);
 		Log::print("DONE");
 	}
 
@@ -49,104 +41,44 @@ public:
 		glClear(GL_COLOR_BUFFER_BIT);
 	}
 
+	static void attachCamera(Camera* camera) {
+		Renderer::camera = camera;
+	}
+
 	static void addToQueue(Mesh* mesh) {
 		queue.push_back(mesh);
 	}
 
 	static void render() {
-		updateBuffer();
-		renderQueue();
-	}
+		TimeManager::stopCpu();
+		TimeManager::startGpu();
 
-	static void renderQueue() {
-		Log::print("Rendering queue");
+		if (Config::get(DYNAMIC_RENDERING_ENABLED) == true || !alreadyUpdated) {
+			buffer.update(queue);
+		}
+		alreadyUpdated = true;
+		queue.clear();
 
-		shader->use();
-		shader->setUniform("near", Config::get(CAMERA_NEAR_PLANE));
-		shader->setUniform("far", Config::get(CAMERA_FAR_PLANE));
+		TimeManager::startRendering();
+		Shader::getMainShader()->use();
+		Shader::getMainShader()->setUniform("near", Config::get(CAMERA_NEAR_PLANE));
+		Shader::getMainShader()->setUniform("far", Config::get(CAMERA_FAR_PLANE));
 
-		shader->setUniform("cameraPosition", vec3(0, 0, 1));
-		shader->setUniform("cameraDirection", vec3(0, 0, -1));
+		Shader::getMainShader()->setUniform("cameraPosition", vec3(0, 0, 1));
+		Shader::getMainShader()->setUniform("cameraDirection", vec3(0, 0, -1));
+		Shader::getMainShader()->setUniform("cameraTransformation", camera->getTransformation());
+		Shader::getMainShader()->setUniform("cameraRotations", camera->getRotations());
 
-		glBindVertexArray(vao);
-		glDrawElements(GL_TRIANGLES, Primitives::cube->getIndices().size(), GL_UNSIGNED_INT, 0);
-
-		glBindVertexArray(0);
-
-		ErrorHandler::handleErrors();
-		Log::print("DONE");
-	}
-
-	static void prepareBuffer() {
-		Log::print("Preparing buffer");
-		glGenVertexArrays(1, &vao);
-		glGenBuffers(1, &vbo);
-		glGenBuffers(1, &ebo);
-
-		glBindVertexArray(vao);
-
-
-		glBindBuffer(GL_ARRAY_BUFFER, vbo);
-		glBufferData(
-			GL_ARRAY_BUFFER,
-			bufferSize * sizeof(Vertex),
-			nullptr,
-			GL_DYNAMIC_DRAW);
-
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
-		glBufferData(
-			GL_ELEMENT_ARRAY_BUFFER,
-			bufferSize * sizeof(uint),
-			nullptr,
-			GL_DYNAMIC_DRAW);
-
-		glVertexAttribPointer(0, 3, GL_FLOAT, false, sizeof(Vertex), (void*)0);
-		glEnableVertexAttribArray(0);
-		glVertexAttribPointer(1, 2, GL_FLOAT, false, sizeof(Vertex), (void*)(sizeof(vec3)));
-		glEnableVertexAttribArray(1);
-		glVertexAttribPointer(2, 3, GL_FLOAT, false, sizeof(Vertex), (void*)(sizeof(vec3) + sizeof(vec2)));
-		glEnableVertexAttribArray(2);
-
-		glBindVertexArray(0);
+		buffer.render();
+		TimeManager::stopRendering();
 
 		ErrorHandler::handleErrors();
-		Log::print("DONE");
-	}
 
-	static void updateBuffer() {
-		Log::print("UPDATING BUFFER");
-		//vector<Vertex> vertices = Primitives::cube->getVertices();
-		
-		glBindVertexArray(vao);
-
-		glBindBuffer(GL_ARRAY_BUFFER, vbo);
-		glBufferSubData(
-			GL_ARRAY_BUFFER,
-			0,
-			Primitives::cube->getVertices().size() * sizeof(Vertex),
-			&Primitives::cube->getVertices()[0]
-		);
-
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
-		glBufferSubData(
-			GL_ELEMENT_ARRAY_BUFFER,
-			0,
-			Primitives::cube->getIndices().size() * sizeof(uint),
-			&Primitives::cube->getIndices()[0]
-		);
-
-		glBindVertexArray(0);
-
-		ErrorHandler::handleErrors();
-		Log::print("DONE");
+		TimeManager::stopGpu();
 	}
 };
-
+	
 vector<Mesh*> Renderer::queue;
-int Renderer::bufferSize;
-uint Renderer::vao;
-uint Renderer::vbo;
-uint Renderer::ebo;
-
-Texture* Renderer::texture;
-Shader* Renderer::shader;
+RenderBuffer Renderer::buffer;
+Camera* Renderer::camera;
+bool Renderer::alreadyUpdated = false;

@@ -122,6 +122,9 @@
     <ClInclude Include="Directions.h">
       <Filter>Header Files\static</Filter>
     </ClInclude>
+    <ClInclude Include="RenderBuffer.h">
+      <Filter>Header Files\nonstatic</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="Uwagi.txt">
@@ -135,5 +138,6 @@
     <None Include="shaders\vs.glsl">
       <Filter>Resource Files\Shaders</Filter>
     </None>
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
 </Project>
