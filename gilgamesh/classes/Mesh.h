@@ -19,25 +19,26 @@ private:
 	vector <uint> indices;
 
 	Texture* texture = NULL;
-	Shader* shader = NULL;
 
 public:
 	Mesh() {}
 
-	Mesh(vector <Vertex> vertices, vector <uint> indices, Texture* texture = NULL, Shader* shader = NULL) {
+	Mesh(vector <Vertex> vertices, vector <uint> indices, Texture* texture = NULL) {
 		this->vertices = vertices;
 		this->indices = indices;
 		this->texture = texture;
-		this->shader = shader;
 	}
 
-	Mesh(Mesh* origin, Texture* texture = NULL, Shader* shader = NULL) {
+	Mesh(Mesh* origin, Texture* texture = NULL) {
 		this->origin = origin;
 		this->texture = texture;
-		this->shader = shader;
 
 		vertices = origin->vertices;
 		indices = origin->indices;
+	}
+
+	void setTexture(Texture* texture) {
+		this->texture = texture;
 	}
 
 	vector <Vertex>& getVertices() {

@@ -3,16 +3,13 @@
 #include "stdafx.h"
 #include "Primitives.h"
 #include "Mesh.h"
+#include "RenderBuffer.h"
 
 class Renderer {
 private:
 	static vector <Mesh*> queue;
 	
-	static uint vao;
-	static uint vbo;
-	static uint ebo;
-
-	static int bufferSize;
+	static RenderBuffer buffer;
 
 	static Camera* camera;
 
@@ -28,9 +25,6 @@ public:
 		//glEnable(GL_CULL_FACE);
 		glFrontFace(GL_CW);
 
-		bufferSize = 100;
-
-		prepareBuffer();
 		Log::print("DONE");
 	}
 
@@ -144,8 +138,5 @@ public:
 };
 
 vector<Mesh*> Renderer::queue;
-int Renderer::bufferSize;
-uint Renderer::vao;
-uint Renderer::vbo;
-uint Renderer::ebo;
+RenderBuffer Renderer::buffer;
 Camera* Renderer::camera;

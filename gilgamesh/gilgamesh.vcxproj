@@ -163,6 +163,7 @@
     <ClInclude Include="Drawable.h" />
     <ClInclude Include="InputHandler.h" />
     <ClInclude Include="Light.h" />
+    <ClInclude Include="RenderBuffer.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Uwagi.txt" />

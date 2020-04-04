@@ -18,13 +18,55 @@ private:
 public:
 	GameObject() {}
 
-	GameObject(Mesh* mesh, vec3 position = vec3(0,0,0), vec3 dimensions = vec3(0,0,0), float yaw = 0, float pitch = 0, float roll = 0) {
+	GameObject(Mesh* mesh, vec3 position = vec3(0,0,0), vec3 dimensions = vec3(1,1,1), float yaw = 0, float pitch = 0, float roll = 0) {
 		init(mesh, position, dimensions, yaw, pitch, roll);
 	}
 
-	void init(Mesh* mesh, vec3 position = vec3(0,0,0), vec3 dimensions = vec3(0, 0, 0), float yaw = 0, float pitch = 0, float roll = 0) {
-		this->position = position;
+	GameObject(Mesh* mesh, Texture* texture, vec3 position = vec3(0, 0, 0), vec3 dimensions = vec3(1, 1, 1), float yaw = 0, float pitch = 0, float roll = 0) {
+		init(mesh, texture, position, dimensions, yaw, pitch, roll);
+	}
+
+	void init(Mesh* mesh, vec3 position = vec3(0,0,0), vec3 dimensions = vec3(1,1,1), float yaw = 0, float pitch = 0, float roll = 0) {
 		this->mesh = mesh;
+		this->position = position;
+		this->dimensions = dimensions;
+		this->yaw = yaw;
+		this->pitch = pitch;
+		this->roll = roll;
+	}
+
+	void init(Mesh* mesh, Texture* texture, vec3 position = vec3(0, 0, 0), vec3 dimensions = vec3(1, 1, 1), float yaw = 0, float pitch = 0, float roll = 0) {
+		this->mesh = mesh;
+		this->mesh->setTexture(texture);
+		this->position = position;
+		this->dimensions = dimensions;
+		this->yaw = yaw;
+		this->pitch = pitch;
+		this->roll = roll;
+	}
+
+	Mesh* getMesh() {
+		return mesh;
+	}
+
+	vec3 getPosition() {
+		return position;
+	}
+
+	vec3 getDimensions() {
+		return dimensions;
+	}
+
+	float getYaw() {
+		return yaw;
+	}
+
+	float getPitch() {
+		return pitch;
+	}
+
+	float getRoll() {
+		return roll;
 	}
 
 	void scale(float multiplier) {
