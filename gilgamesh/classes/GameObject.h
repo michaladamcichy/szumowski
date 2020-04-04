@@ -8,8 +8,9 @@ class GameObject {
 private:
 	Mesh* mesh = NULL;
 
+	vec3 position = vec3(0, 0, 0);
 	vec3 dimensions = vec3(1, 1, 1);
-	vec3 position = vec3(0,0,0);
+	
 	float yaw = 0;
 	float pitch = 0;
 	float roll = 0;
@@ -17,11 +18,11 @@ private:
 public:
 	GameObject() {}
 
-	GameObject(Mesh* mesh, vec3 position = vec3(0,0,0)) {
-		init(mesh, position);
+	GameObject(Mesh* mesh, vec3 position = vec3(0,0,0), vec3 dimensions = vec3(0,0,0), float yaw = 0, float pitch = 0, float roll = 0) {
+		init(mesh, position, dimensions, yaw, pitch, roll);
 	}
 
-	void init(Mesh* mesh, vec3 position = vec3(0,0,0)) {
+	void init(Mesh* mesh, vec3 position = vec3(0,0,0), vec3 dimensions = vec3(0, 0, 0), float yaw = 0, float pitch = 0, float roll = 0) {
 		this->position = position;
 		this->mesh = mesh;
 	}
@@ -32,6 +33,10 @@ public:
 
 	void scale(vec3 multiplier) {
 		dimensions *= multiplier;
+	}
+
+	void setHeight(float height) {
+		dimensions.y = height;
 	}
 
 	void setDimensions(vec3 dimensions) {

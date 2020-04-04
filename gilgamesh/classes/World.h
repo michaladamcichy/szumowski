@@ -37,6 +37,10 @@ public:
 		}
 	}
 
+	void update() {
+
+	}
+
 
 	void draw() {
 		Renderer::attachCamera(this->getActiveCamera());
