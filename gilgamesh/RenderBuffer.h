@@ -126,9 +126,17 @@ private:
 		indices->clear();
 		indices->reserve(indicesCount);
 
+		int offset = 0;
+		int index = 0;
 		for (Mesh* mesh : meshes) {
 			vertices->insert(vertices->end(), mesh->getVertices().begin(), mesh->getVertices().end());
 			indices->insert(indices->end(), mesh->getIndices().begin(), mesh->getIndices().end());
+
+			for (int i = index; i < index + mesh->getIndices().size(); i++) {
+				(*indices)[i] += offset;
+			}
+			offset += mesh->getVertices().size();
+			index += mesh->getIndices().size();
 		}
 	}
 };

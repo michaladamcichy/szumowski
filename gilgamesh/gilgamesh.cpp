@@ -50,6 +50,7 @@ int main(int argc, char** argv)
 		Renderer::clear();
 
 		world.handleInput(mouse, keyboard);
+		world.update();
 		world.draw();
 
 		Renderer::render();

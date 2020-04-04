@@ -18,16 +18,16 @@ private:
 public:
 	GameObject() {}
 
-	GameObject(Mesh* mesh, vec3 position = vec3(0,0,0), vec3 dimensions = vec3(1,1,1), float yaw = 0, float pitch = 0, float roll = 0) {
-		init(mesh, position, dimensions, yaw, pitch, roll);
+	GameObject(Mesh* origin, vec3 position = vec3(0,0,0), vec3 dimensions = vec3(1,1,1), float yaw = 0, float pitch = 0, float roll = 0) {
+		init(origin, position, dimensions, yaw, pitch, roll);
 	}
 
-	GameObject(Mesh* mesh, Texture* texture, vec3 position = vec3(0, 0, 0), vec3 dimensions = vec3(1, 1, 1), float yaw = 0, float pitch = 0, float roll = 0) {
-		init(mesh, texture, position, dimensions, yaw, pitch, roll);
+	GameObject(Mesh* origin, Texture* texture, vec3 position = vec3(0, 0, 0), vec3 dimensions = vec3(1, 1, 1), float yaw = 0, float pitch = 0, float roll = 0) {
+		init(origin, texture, position, dimensions, yaw, pitch, roll);
 	}
 
-	void init(Mesh* mesh, vec3 position = vec3(0,0,0), vec3 dimensions = vec3(1,1,1), float yaw = 0, float pitch = 0, float roll = 0) {
-		this->mesh = mesh;
+	void init(Mesh* origin, vec3 position = vec3(0,0,0), vec3 dimensions = vec3(1,1,1), float yaw = 0, float pitch = 0, float roll = 0) {
+		this->mesh = new Mesh(origin);
 		this->position = position;
 		this->dimensions = dimensions;
 		this->yaw = yaw;
@@ -35,14 +35,23 @@ public:
 		this->roll = roll;
 	}
 
-	void init(Mesh* mesh, Texture* texture, vec3 position = vec3(0, 0, 0), vec3 dimensions = vec3(1, 1, 1), float yaw = 0, float pitch = 0, float roll = 0) {
-		this->mesh = mesh;
+	void init(Mesh* origin, Texture* texture, vec3 position = vec3(0, 0, 0), vec3 dimensions = vec3(1, 1, 1), float yaw = 0, float pitch = 0, float roll = 0) {
+		this->mesh = new Mesh(origin, texture);
 		this->mesh->setTexture(texture);
 		this->position = position;
 		this->dimensions = dimensions;
 		this->yaw = yaw;
 		this->pitch = pitch;
 		this->roll = roll;
+	}
+
+	void update() {
+		mat4 transformation = glm::translate(mat4(1), position);// *
+			//glm::rotate(mat4(1), pitch, Directions::X_AXIS) *
+			//glm::rotate(mat4(1), yaw, Directions::Y_AXIS) *
+			//glm::rotate(mat4(1), roll, Directions::Z_AXIS) * 
+			//glm::scale(mat4(1), dimensions); //ALERT nie testowane
+		mesh->update(transformation);
 	}
 
 	Mesh* getMesh() {

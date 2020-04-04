@@ -169,6 +169,7 @@
     <Text Include="Uwagi.txt" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="ClassDiagram.cd" />
     <None Include="shaders\fs.glsl" />
     <None Include="shaders\vs.glsl" />
   </ItemGroup>
