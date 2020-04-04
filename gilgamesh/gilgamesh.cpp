@@ -37,7 +37,6 @@ int main(int argc, char** argv)
 	Keyboard keyboard;
 
 	World world;
-	world.update();
 	
 	while (!glfwWindowShouldClose(GLFW::getWindow())) {
 		TimeManager::startCpu();
@@ -54,7 +53,7 @@ int main(int argc, char** argv)
 
 
 		world.handleInput(mouse, keyboard);
-		//world.update();
+		world.update();
 		world.draw();
 
 

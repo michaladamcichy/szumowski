@@ -29,7 +29,6 @@ enum ConfigInt {
 	TOGGLE_KEY_INERTIA,
 	FRAME_DELAY,
 	TIME_MEASUREMENT_FREQUENCY
-
 };
 
 enum ConfigString {
@@ -41,6 +40,7 @@ enum ConfigString {
 
 enum ConfigBool {
 	LOG_ENABLED,
+	DYNAMIC_RENDERING_ENABLED
 };
 
 enum ConfigVec3 {
@@ -92,6 +92,7 @@ public:
 		floats[CAMERA_BOOST] = 5;
 
 		bools[LOG_ENABLED] = true;
+		bools[DYNAMIC_RENDERING_ENABLED] = false;
 
 		vec3s[GROUND_DIMENSIONS] = vec3(1000, 1000, 1000); //ALERT ZROBILEM UNIFORMOWE SKALOWANIE, ZEBY NIE PSUC NORMALNYCH
 		vec3s[PLAYER_INITIAL_POSITION] = vec3(0, 0, 0);

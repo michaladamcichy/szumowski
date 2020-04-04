@@ -17,12 +17,14 @@ private:
 	vector <GameObject*> objects;
 	vector <Light> lights {Light()};
 
+	bool alreadyUpdated = false;
+
 public:
 	World() {
 		globalCamera = Camera(vec3(0, 10, 10));
 
-		int rows = 50;
-		int columns = 50;
+		int rows = 100;
+		int columns = 100;
 
 		float step = 2.0;
 
@@ -51,8 +53,11 @@ public:
 	}
 
 	void update() {
-		for (GameObject* object : objects) {
-			object->update();
+		if (Config::get(DYNAMIC_RENDERING_ENABLED) == true || !alreadyUpdated) {
+			for (GameObject* object : objects) {
+				object->update();
+			}
+			alreadyUpdated = true;
 		}
 	}
 

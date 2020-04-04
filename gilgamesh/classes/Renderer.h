@@ -14,6 +14,7 @@ private:
 
 	static Camera* camera;
 
+	static bool alreadyUpdated;
 public:
 	static void init() {
 		Log::print("Initializing Renderer");
@@ -26,7 +27,7 @@ public:
 		glFrontFace(GL_CW);
 		
 
-		buffer.init(100000, 100000);
+		buffer.init(1000000, 1000000);
 		Log::print("DONE");
 	}
 
@@ -52,7 +53,10 @@ public:
 		TimeManager::stopCpu();
 		TimeManager::startGpu();
 
-		buffer.update(queue);
+		if (Config::get(DYNAMIC_RENDERING_ENABLED) == true || !alreadyUpdated) {
+			buffer.update(queue);
+		}
+		alreadyUpdated = true;
 		queue.clear();
 
 		TimeManager::startRendering();
@@ -77,3 +81,4 @@ public:
 vector<Mesh*> Renderer::queue;
 RenderBuffer Renderer::buffer;
 Camera* Renderer::camera;
+bool Renderer::alreadyUpdated = false;
