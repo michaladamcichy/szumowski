@@ -48,12 +48,14 @@ public:
 	}
 
 	void update() {
-		if (Config::get(DYNAMIC_RENDERING_ENABLED) == true || !alreadyUpdated) {
-			for (GameObject* object : objects) {
-				object->update();
-			}
-			alreadyUpdated = true;
+		int i = 0;
+		for (auto& object : objects) {
+			i++;
+			float change = i % 2 == 0 ? 0.1 : -0.1;
+			object->move(vec3(0, TimeManager::getFrameDuration() * change, 0));
 		}
+
+		updateObjects();
 	}
 
 	void draw() {
@@ -65,6 +67,47 @@ public:
 	}
 
 private:
+	void updateObjects() {
+		if (Config::get(DYNAMIC_RENDERING_ENABLED) == true || !alreadyUpdated) {
+
+			if (Config::get(MULTITHREADING_ENABLED) == true) {
+				int threadsCount = Config::get(THREADS_COUNT);
+				int work = objects.size() / threadsCount;
+
+				thread** threads = new thread * [threadsCount];
+
+
+				vector <GameObject*>* objects = &this->objects;
+
+				for (int i = 0; i < threadsCount - 1; i++) {
+					threads[i] = new thread([objects, i, threadsCount, work]() mutable {
+						for (int j = i * work; j < i * work + work; j++) {
+							(*objects)[j]->update();
+						}
+					});
+				}
+
+				threads[threadsCount - 1] = new thread([objects, threadsCount, work]() mutable {
+					for (int j = (threadsCount - 1) * work; j < objects->size(); j++) {
+						(*objects)[j]->update();
+					}
+				});
+
+				for (int i = 0; i < threadsCount; i++) {
+					threads[i]->join();
+				}
+
+				delete[] threads;
+			}
+			else {
+				for (GameObject* object : objects) {
+					object->update();
+				}
+			}
+			alreadyUpdated = true;
+		}
+	}
+
 	Camera* getActiveCamera() {
 		if (Config::get(CAMERA_MODE) == CAMERA_GLOBAL) {
 			return &globalCamera;
