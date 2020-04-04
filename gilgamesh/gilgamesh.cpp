@@ -51,6 +51,7 @@ int main(int argc, char** argv)
 
 		world.handleInput(mouse, keyboard);
 		world.draw();
+
 		Renderer::render();
 
 		GLFW::updateScreen();  

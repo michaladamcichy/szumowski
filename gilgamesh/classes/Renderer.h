@@ -24,7 +24,9 @@ public:
 
 		//glEnable(GL_CULL_FACE);
 		glFrontFace(GL_CW);
+		
 
+		buffer.init(10000, 10000);
 		Log::print("DONE");
 	}
 
@@ -47,12 +49,12 @@ public:
 	}
 
 	static void render() {
-		updateBuffer();
-		renderQueue();
-	}
+		Log::print("RENDERING");
+		Log::print("UPDATING");
+		buffer.update(queue);
+		queue.clear();
+		Log::done();
 
-
-	static void renderQueue() {
 		Shader::getMainShader()->use();
 		Shader::getMainShader()->setUniform("near", Config::get(CAMERA_NEAR_PLANE));
 		Shader::getMainShader()->setUniform("far", Config::get(CAMERA_FAR_PLANE));
@@ -62,78 +64,10 @@ public:
 		Shader::getMainShader()->setUniform("cameraTransformation", camera->getTransformation());
 		Shader::getMainShader()->setUniform("cameraRotations", camera->getRotations());
 
-		glBindVertexArray(vao);
-		glDrawElements(GL_TRIANGLES, Primitives::getCube()->getIndices().size(), GL_UNSIGNED_INT, 0);
-
-		glBindVertexArray(0);
+		buffer.render();
 
 		ErrorHandler::handleErrors();
-	}
-
-	static void prepareBuffer() {
-		Log::print("Preparing buffer");
-		glGenVertexArrays(1, &vao);
-		glGenBuffers(1, &vbo);
-		glGenBuffers(1, &ebo);
-
-		glBindVertexArray(vao);
-
-
-		glBindBuffer(GL_ARRAY_BUFFER, vbo);
-		glBufferData(
-			GL_ARRAY_BUFFER,
-			bufferSize * sizeof(Vertex),
-			nullptr,
-			GL_DYNAMIC_DRAW);
-
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
-		glBufferData(
-			GL_ELEMENT_ARRAY_BUFFER,
-			bufferSize * sizeof(uint),
-			nullptr,
-			GL_DYNAMIC_DRAW);
-
-		glVertexAttribPointer(0, 3, GL_FLOAT, false, sizeof(Vertex), (void*)0);
-		glEnableVertexAttribArray(0);
-		glVertexAttribPointer(1, 2, GL_FLOAT, false, sizeof(Vertex), (void*)(sizeof(vec3)));
-		glEnableVertexAttribArray(1);
-		glVertexAttribPointer(2, 3, GL_FLOAT, false, sizeof(Vertex), (void*)(sizeof(vec3) + sizeof(vec2)));
-		glEnableVertexAttribArray(2);
-
-		glBindVertexArray(0);
-
-		ErrorHandler::handleErrors();
-		Log::print("DONE");
-	}
-
-	static void updateBuffer() {
-		//vector<Vertex> vertices = Primitives::getCube()->getVertices();
-		
-		Mesh* mesh = queue[0];
-		//vector<Vertex> vertices = queue[0]->getVertices();
-		//vector<uint> indices = queue[0]->getIndices();
-
-		glBindVertexArray(vao);
-
-		glBindBuffer(GL_ARRAY_BUFFER, vbo);
-		glBufferSubData(
-			GL_ARRAY_BUFFER,
-			0,
-			mesh->getVertices().size() * sizeof(Vertex),
-			&mesh->getVertices()[0]
-		);
-
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
-		glBufferSubData(
-			GL_ELEMENT_ARRAY_BUFFER,
-			0,
-			mesh->getIndices().size() * sizeof(uint),
-			&mesh->getIndices()[0]
-		);
-
-		glBindVertexArray(0);
-
-		ErrorHandler::handleErrors();
+		Log::done();
 	}
 };
 

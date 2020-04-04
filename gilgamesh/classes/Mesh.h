@@ -45,7 +45,7 @@ public:
 		return vertices;
 	}
 
-	vector <uint> getIndices() {
+	vector <uint>& getIndices() {
 		return indices;
 	}
 

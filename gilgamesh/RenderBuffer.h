@@ -21,7 +21,16 @@ private:
 	int maxIndicesCount = 0;
 
 public:
+	RenderBuffer() {}
+
 	RenderBuffer(int maxVerticesCount, int maxIndicesCount) {
+		init(maxVerticesCount, maxIndicesCount);
+	}
+
+	void init(int maxVerticesCount, int maxIndicesCount) {
+		this->maxVerticesCount = maxVerticesCount;
+		this->maxIndicesCount = maxIndicesCount;
+
 		Log::print("Preparing buffer");
 		glGenVertexArrays(1, &vao);
 		glGenBuffers(1, &vbo);
@@ -58,44 +67,64 @@ public:
 	}
 
 	void update(vector <Mesh*> meshes) {
+		Log::print("UPDATE");
 		mergeMeshes(meshes, &vertices, &indices);
 
 		glBindVertexArray(vao);
 
+		Log::print("VERTICES");
 		glBindBuffer(GL_ARRAY_BUFFER, vbo);
 		glBufferSubData(
 			GL_ARRAY_BUFFER,
 			0,
 			vertices.size() * sizeof(Vertex),
 			&vertices[0]
+			//Primitives::getCube()->getVertices().size() * sizeof(Vertex),
+			//&Primitives::getCube()->getVertices()[0]
 		);
+		ErrorHandler::handleErrors();
+		Log::done();
 
+		Log::print("INDICES");
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
 		glBufferSubData(
 			GL_ELEMENT_ARRAY_BUFFER,
 			0,
 			indices.size() * sizeof(uint),
 			&indices[0]
+			//Primitives::getCube()->getIndices().size() * sizeof(uint),
+			//&Primitives::getCube()->getIndices()[0]
 		);
+		ErrorHandler::handleErrors();
+		Log::done();
 
 		glBindVertexArray(0);
 
 		ErrorHandler::handleErrors();
+		Log::done();
+	}
+
+	void render() {
+		glBindVertexArray(vao);
+		glDrawElements(GL_TRIANGLES, indicesCount, GL_UNSIGNED_INT, 0);
+
+		glBindVertexArray(0);
 	}
 
 private:
 	void mergeMeshes(vector <Mesh*>& meshes, vector <Vertex>* vertices, vector <uint>* indices) {
-		int totalVerticesCount = 0;
-		int totalIndicesCount = 0;
+		verticesCount = 0;
+		indicesCount = 0;
+
 		for (Mesh* mesh : meshes) {
-			totalVerticesCount += mesh->getVertices().size();
-			totalIndicesCount += mesh->getIndices().size();
+			verticesCount += mesh->getVertices().size();
+			indicesCount += mesh->getIndices().size();
 		}
 
 		vertices->clear();
-		vertices->reserve(totalVerticesCount);
+		vertices->reserve(verticesCount);
 		indices->clear();
-		indices->reserve(totalIndicesCount);
+		indices->reserve(indicesCount);
 
 		for (Mesh* mesh : meshes) {
 			vertices->insert(vertices->end(), mesh->getVertices().begin(), mesh->getVertices().end());
