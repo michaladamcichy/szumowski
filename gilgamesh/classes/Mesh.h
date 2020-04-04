@@ -49,6 +49,11 @@ public:
 	}
 
 	void update(mat4 transformation) {
+		if (this->origin == NULL) {
+			
+		}
+		else {
 
+		}
 	}
 };
