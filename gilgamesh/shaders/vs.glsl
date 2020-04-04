@@ -14,6 +14,6 @@ void main() {
 	gl_Position = cameraTransformation * vec4(inPosition, 1.0);
 	
 	uv = inUv;
-	normal =  normalize(/*cameraRotations **/ inNormal); //ALERT! nie testowane
+	normal =  normalize(cameraRotations * inNormal); //ALERT! nie testowane
 	fragmentPosition = vec4(inPosition, 1.0);
 };

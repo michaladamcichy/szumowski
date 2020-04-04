@@ -82,6 +82,7 @@ public:
 		strings[TEXTURES_PATH] = "assets/textures/";
 		strings[MODELS_PATH] = "assets/models/";
 		strings[SHADERS_PATH] = "shaders/";
+		strings[]
 
 		floats[MOUSE_SENSITIVITY] = 0.001;
 		floats[PLAYER_SPEED] = 0.1;
@@ -98,7 +99,7 @@ public:
 		bools[DYNAMIC_RENDERING_ENABLED] = true;
 		bools[MULTITHREADING_ENABLED] = false;
 
-		vec3s[GROUND_DIMENSIONS] = vec3(1000, 1000, 1000); //ALERT ZROBILEM UNIFORMOWE SKALOWANIE, ZEBY NIE PSUC NORMALNYCH
+		vec3s[GROUND_DIMENSIONS] = vec3(1000, 1000, 1000); //ALERT ZROBILEM UNIFORMOWE SKALOWANIE, ZEBY NIE PSUC NORMALNYCH. ALE CHYBA JEST OK
 		vec3s[PLAYER_INITIAL_POSITION] = vec3(0, 0, 0);
 
 		others[CAMERA_MODE] = CAMERA_PLAYER;

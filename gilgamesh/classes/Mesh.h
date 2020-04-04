@@ -27,10 +27,6 @@ public:
 		this->vertices = vertices;
 		this->indices = indices;
 		this->texture = texture;
-
-		//if (recursion == false) {
-		//	origin = new Mesh(vertices, indices, NULL, true);
-		//}
 	}
 
 	Mesh(Mesh* origin, Texture* texture = NULL) {
@@ -55,12 +51,9 @@ public:
 
 	void update(mat4 transformation) {
 		mat3 rotations = mat3(transformation); //ALERT nietestowane
-		if (this->origin == NULL) {
-			/*for (Vertex& vertex : vertices) {
-				vertex.position = vec3(transformation * vec4(vertex.position, 1.0));
-				vertex.normal = rotations * vertex.normal;
-			}*/
+		if (origin == NULL) {
 			Log::print("Trying to modify origin!");
+			assert(!"Trying to modify origin");
 		}
 		else {
 			for (int i = 0; i < origin->getVertices().size(); i++) {
