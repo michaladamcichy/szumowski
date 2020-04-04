@@ -46,11 +46,11 @@ public:
 	}
 
 	void update() {
-		mat4 transformation = glm::translate(mat4(1), position);// *
-			//glm::rotate(mat4(1), pitch, Directions::X_AXIS) *
-			//glm::rotate(mat4(1), yaw, Directions::Y_AXIS) *
-			//glm::rotate(mat4(1), roll, Directions::Z_AXIS) * 
-			//glm::scale(mat4(1), dimensions); //ALERT nie testowane
+		mat4 transformation = glm::translate(mat4(1), position) *
+			glm::rotate(mat4(1), pitch, Directions::X_AXIS) *
+			glm::rotate(mat4(1), yaw, Directions::Y_AXIS) *
+			glm::rotate(mat4(1), roll, Directions::Z_AXIS) * 
+			glm::scale(mat4(1), dimensions);
 		mesh->update(transformation);
 	}
 
@@ -100,37 +100,58 @@ public:
 
 	void rotate(float yaw, float pitch = 0, float roll = 0) {
 		this->yaw += yaw;
+		handleAngleOverflow(this->yaw);
 		this->pitch += pitch;
+		handleAngleOverflow(this->pitch);
 		this->roll += roll;
+		handleAngleOverflow(this->roll);
 	}
 
 	void setRotations(float yaw, float pitch = 0, float roll = 0) {
 		this->yaw = yaw;
+		handleAngleOverflow(this->yaw);
 		this->pitch = pitch;
+		handleAngleOverflow(this->pitch);
 		this->roll = roll;
+		handleAngleOverflow(this->roll);
 	}
 
 	void rotateYaw(float yaw) {
 		this->yaw += yaw;
+		handleAngleOverflow(this->yaw);
 	}
 
 	void rotatePitch(float pitch) {
 		this->pitch += pitch;
+		handleAngleOverflow(this->pitch);
 	}
 
 	void rotateRoll(float roll) {
 		this->roll += roll;
+		handleAngleOverflow(this->roll);
 	}
 
 	void setYaw(float yaw) {
 		this->yaw = yaw;
+		handleAngleOverflow(this->yaw);
 	}
 
 	void setPitch(float pitch) {
 		this->pitch = pitch;
+		handleAngleOverflow(this->pitch);
 	}
 
 	void setRoll(float roll) {
 		this->roll = roll;
+		handleAngleOverflow(this->roll);
+	}
+
+private:
+	void handleAngleOverflow(float& angle) {
+		if (angle > Constants::DOUBLE_PI) {
+			angle - int(angle / Constants::DOUBLE_PI) * Constants::HALF_PI;
+		} else if (angle < -Constants::DOUBLE_PI) {
+			angle - int(angle / Constants::DOUBLE_PI) * Constants::HALF_PI;
+		}
 	}
 };

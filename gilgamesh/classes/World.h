@@ -53,6 +53,9 @@ public:
 			i++;
 			float change = i % 2 == 0 ? 0.1 : -0.1;
 			object->move(vec3(0, TimeManager::getFrameDuration() * change, 0));
+			float angle = i % 2 == 0 ? 5.0 : -5.0;
+			angle *= TimeManager::getFrameDuration();
+			object->rotate(0, angle, 0);
 		}
 
 		updateObjects();
