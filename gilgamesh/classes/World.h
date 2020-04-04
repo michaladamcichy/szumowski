@@ -23,8 +23,8 @@ public:
 	World() {
 		globalCamera = Camera(vec3(0, 10, 10));
 
-		int rows = 10;
-		int columns = 10;
+		int rows = 100;
+		int columns = 100;
 
 		float step = 2.0;
 
