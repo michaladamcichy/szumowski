@@ -28,6 +28,7 @@ enum ConfigInt {
 	SCREEN_HEIGHT,
 	TOGGLE_KEY_INERTIA,
 	FRAME_DELAY,
+	TIME_MEASUREMENT_FREQUENCY
 
 };
 
@@ -68,10 +69,11 @@ public:
 	}
 
 	Config() {
-		ints[SCREEN_WIDTH] = 1200;
-		ints[SCREEN_HEIGHT] = 720;
+		ints[SCREEN_WIDTH] = 1920;
+		ints[SCREEN_HEIGHT] = 1080;
 		ints[TOGGLE_KEY_INERTIA] = 100;
 		ints[FRAME_DELAY] = 15;
+		ints[TIME_MEASUREMENT_FREQUENCY] = 100;
 
 		strings[WINDOW_TITLE] = "Szumowski";
 		strings[TEXTURES_PATH] = "assets/textures/";

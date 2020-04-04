@@ -31,7 +31,6 @@ public:
 		this->maxVerticesCount = maxVerticesCount;
 		this->maxIndicesCount = maxIndicesCount;
 
-		Log::print("Preparing buffer");
 		glGenVertexArrays(1, &vao);
 		glGenBuffers(1, &vbo);
 		glGenBuffers(1, &ebo);
@@ -63,16 +62,13 @@ public:
 		glBindVertexArray(0);
 
 		ErrorHandler::handleErrors();
-		Log::print("DONE");
 	}
 
 	void update(vector <Mesh*> meshes) {
-		Log::print("UPDATE");
 		mergeMeshes(meshes, &vertices, &indices);
 
 		glBindVertexArray(vao);
 
-		Log::print("VERTICES");
 		glBindBuffer(GL_ARRAY_BUFFER, vbo);
 		glBufferSubData(
 			GL_ARRAY_BUFFER,
@@ -83,9 +79,7 @@ public:
 			//&Primitives::getCube()->getVertices()[0]
 		);
 		ErrorHandler::handleErrors();
-		Log::done();
-
-		Log::print("INDICES");
+		
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
 		glBufferSubData(
 			GL_ELEMENT_ARRAY_BUFFER,
@@ -96,12 +90,10 @@ public:
 			//&Primitives::getCube()->getIndices()[0]
 		);
 		ErrorHandler::handleErrors();
-		Log::done();
 
 		glBindVertexArray(0);
 
 		ErrorHandler::handleErrors();
-		Log::done();
 	}
 
 	void render() {

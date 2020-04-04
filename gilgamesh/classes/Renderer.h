@@ -4,6 +4,7 @@
 #include "Primitives.h"
 #include "Mesh.h"
 #include "RenderBuffer.h"
+#include "TimeManager.h"
 
 class Renderer {
 private:
@@ -12,7 +13,6 @@ private:
 	static RenderBuffer buffer;
 
 	static Camera* camera;
-
 
 public:
 	static void init() {
@@ -26,7 +26,7 @@ public:
 		glFrontFace(GL_CW);
 		
 
-		buffer.init(10000, 10000);
+		buffer.init(100000, 100000);
 		Log::print("DONE");
 	}
 
@@ -49,12 +49,13 @@ public:
 	}
 
 	static void render() {
-		Log::print("RENDERING");
-		Log::print("UPDATING");
+		TimeManager::stopCpu();
+		TimeManager::startGpu();
+
 		buffer.update(queue);
 		queue.clear();
-		Log::done();
 
+		TimeManager::startRendering();
 		Shader::getMainShader()->use();
 		Shader::getMainShader()->setUniform("near", Config::get(CAMERA_NEAR_PLANE));
 		Shader::getMainShader()->setUniform("far", Config::get(CAMERA_FAR_PLANE));
@@ -65,12 +66,14 @@ public:
 		Shader::getMainShader()->setUniform("cameraRotations", camera->getRotations());
 
 		buffer.render();
+		TimeManager::stopRendering();
 
 		ErrorHandler::handleErrors();
-		Log::done();
+
+		TimeManager::stopGpu();
 	}
 };
-
+	
 vector<Mesh*> Renderer::queue;
 RenderBuffer Renderer::buffer;
 Camera* Renderer::camera;
