@@ -23,8 +23,8 @@ public:
 	World() {
 		globalCamera = Camera(vec3(0, 10, 10));
 
-		int rows = 100;
-		int columns = 100;
+		int rows = 10;
+		int columns = 10;
 
 		float step = 2.0;
 
@@ -36,11 +36,6 @@ public:
 				objects.push_back(object);
 			}
 		}
-
-		//GameObject* object = new GameObject(Primitives::getCube(), vec3(0.0, 10.0, 0.0));
-		//objects.push_back(object);
-		//object = new GameObject(Primitives::getCube(), vec3(0.0, -10.0, 0.0));
-		//objects.push_back(object);
 	}
 
 	void handleInput(Mouse& mouse, Keyboard& keyboard) {
