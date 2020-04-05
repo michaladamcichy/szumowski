@@ -109,11 +109,6 @@ public:
 		ErrorHandler::handleErrors();
 		glBindTexture(GL_TEXTURE_2D, id);
 		ErrorHandler::handleErrors();
-		/*if(this->type == TEXTURE_SHOTGUN)
-			Shader::getMainShader()->setUniform("texture1", 0);
-		else {
-			Shader::getMainShader()->setUniform("texture2", 1);
-		}*/
 	}
 
 	~Texture()

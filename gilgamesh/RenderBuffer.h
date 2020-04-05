@@ -58,6 +58,10 @@ public:
 		glEnableVertexAttribArray(1);
 		glVertexAttribPointer(2, 3, GL_FLOAT, false, sizeof(Vertex), (void*)(sizeof(vec3) + sizeof(vec2)));
 		glEnableVertexAttribArray(2);
+		glVertexAttribPointer(3, 1, GL_FLOAT, false, sizeof(Vertex), (void*)(sizeof(vec3) + sizeof(vec2) + sizeof(vec3)));
+		glEnableVertexAttribArray(3);
+
+
 
 		glBindVertexArray(0);
 
