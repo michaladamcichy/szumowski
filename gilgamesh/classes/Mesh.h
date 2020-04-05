@@ -18,26 +18,32 @@ private:
 	vector <Vertex> vertices;
 	vector <uint> indices;
 
-	Texture* texture = NULL;
+	TextureType texture;
 
 public:
 	Mesh() {}
 
-	Mesh(vector <Vertex> vertices, vector <uint> indices, Texture* texture = NULL, bool recursion = false) {
+	Mesh(vector <Vertex> vertices, vector <uint> indices, TextureType texture, bool recursion = false) {
 		this->vertices = vertices;
 		this->indices = indices;
 		this->texture = texture;
+
+		updateTexture(texture);
+
+		Log::done();
 	}
 
-	Mesh(Mesh* origin, Texture* texture = NULL) {
+	Mesh(Mesh* origin, TextureType texture) {
 		this->origin = origin;
 		this->texture = texture;
 
 		vertices = origin->vertices;
 		indices = origin->indices;
+
+		updateTexture(texture);
 	}
 
-	void setTexture(Texture* texture) {
+	void setTexture(TextureType texture) {
 		this->texture = texture;
 	}
 
@@ -47,6 +53,12 @@ public:
 
 	vector <uint>& getIndices() {
 		return indices;
+	}
+
+	void updateTexture(TextureType texture) {
+		for (auto& vertex : vertices) {
+			vertex.texture = texture;
+		}
 	}
 
 	void update(mat4 transformation) {

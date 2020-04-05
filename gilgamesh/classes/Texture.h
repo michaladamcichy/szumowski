@@ -1,18 +1,19 @@
 #pragma once
 
 #include "stdafx.h"
-#include "Shader.h"
 #include "ErrorHandler.h"
+#include "Shader.h"
 
-enum TextureType {
-	TEXTURE_SHOTGUN,
-	TEXTURE_GROUND,
-	TEXTURE_SUN,
-	TEXTURE_BUILDING,
-	TEXTURE_VIRUS,
-	TEXTURE_VIRUS_WOUNDED,
-	TEXTURE_FIRE
-};
+//enum TextureType {
+//	TEXTURE_SHOTGUN,
+//	TEXTURE_GROUND,
+//	TEXTURE_SUN,
+//	TEXTURE_BUILDING,
+//	TEXTURE_VIRUS,
+//	TEXTURE_VIRUS_WOUNDED,
+//	TEXTURE_FIRE,
+//	TEXTURES_COUNT
+//};
 
 class Texture
 {
@@ -77,13 +78,25 @@ public:
 	}
 
 	static void loadTextures() {
-		shotgun.init("shotgun.jpg", TEXTURE_SHOTGUN);
-		ground.init("ground.jpg", TEXTURE_GROUND);
-		sun.init("sun.png", TEXTURE_SUN);
-		building.init("building.jpg", TEXTURE_BUILDING);
-		virus.init("virus.jpg", TEXTURE_VIRUS);
-		virusWounded.init("virusWounded.png", TEXTURE_VIRUS_WOUNDED);
-		fire.init("fire.jpg", TEXTURE_FIRE);
+		shotgun.init(Config::get(TEXTURES_PATH) + "shotgun.jpg", TEXTURE_SHOTGUN);
+		ground.init(Config::get(TEXTURES_PATH) + "ground.jpg", TEXTURE_GROUND);
+		sun.init(Config::get(TEXTURES_PATH) + "sun.png", TEXTURE_SUN);
+		building.init(Config::get(TEXTURES_PATH) + "building.jpg", TEXTURE_BUILDING);
+		virus.init(Config::get(TEXTURES_PATH) + "virus.jpg", TEXTURE_VIRUS);
+		virusWounded.init(Config::get(TEXTURES_PATH) + "virusWounded.png", TEXTURE_VIRUS_WOUNDED);
+		fire.init(Config::get(TEXTURES_PATH) + "fire.png", TEXTURE_FIRE);
+
+		useTextures();
+	}
+
+	static void useTextures() {
+		shotgun.use();
+		ground.use();
+		sun.use();
+		building.use();
+		virus.use();
+		virusWounded.use();
+		fire.use();
 	}
 
 	void printInfo() {
@@ -111,3 +124,11 @@ private:
 	int channelsCount = 0;
 	std::string path = "";
 };
+
+Texture Texture::shotgun;
+Texture Texture::ground;
+Texture Texture::sun;
+Texture Texture::building;
+Texture Texture::virus;
+Texture Texture::virusWounded;
+Texture Texture::fire;

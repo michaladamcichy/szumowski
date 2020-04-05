@@ -82,7 +82,6 @@ public:
 		strings[TEXTURES_PATH] = "assets/textures/";
 		strings[MODELS_PATH] = "assets/models/";
 		strings[SHADERS_PATH] = "shaders/";
-		strings[]
 
 		floats[MOUSE_SENSITIVITY] = 0.001;
 		floats[PLAYER_SPEED] = 0.1;

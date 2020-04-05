@@ -15,7 +15,7 @@
 
 void init() {
 	Config::init();
-	
+
 	if (Config::get(LOG_ENABLED) == true) {
 		Log::enable();
 	}
@@ -27,6 +27,7 @@ void init() {
 	Renderer::init();
 	Primitives::init();
 	Shader::init();
+	Texture::loadTextures();
 }
 
 int main(int argc, char** argv)
