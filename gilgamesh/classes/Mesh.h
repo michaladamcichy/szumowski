@@ -18,18 +18,18 @@ private:
 	vector <Vertex> vertices;
 	vector <uint> indices;
 
-	Texture* texture = NULL;
+	TextureType texture;
 
 public:
 	Mesh() {}
 
-	Mesh(vector <Vertex> vertices, vector <uint> indices, Texture* texture = NULL, bool recursion = false) {
+	Mesh(vector <Vertex> vertices, vector <uint> indices, TextureType texture, bool recursion = false) {
 		this->vertices = vertices;
 		this->indices = indices;
 		this->texture = texture;
 	}
 
-	Mesh(Mesh* origin, Texture* texture = NULL) {
+	Mesh(Mesh* origin, TextureType texture) {
 		this->origin = origin;
 		this->texture = texture;
 
@@ -37,7 +37,7 @@ public:
 		indices = origin->indices;
 	}
 
-	void setTexture(Texture* texture) {
+	void setTexture(TextureType texture) {
 		this->texture = texture;
 	}
 

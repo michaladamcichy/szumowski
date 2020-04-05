@@ -16,6 +16,7 @@ public:
 
 	static void init() {
 		shader = new Shader(Config::get(SHADERS_PATH) + "vs.glsl", Config::get(SHADERS_PATH) + "fs.glsl");
+		shader->setTextures();
 	}
 
 	Shader() {
@@ -110,12 +111,31 @@ public:
 		glUniform3fv(glGetUniformLocation(id, name.c_str()), 1, &value[0]);
 	}
 
+
+	void setUniform(const string& name, int size, int* value) {
+		glUniform1iv(glGetUniformLocation(id, name.c_str()), size, value);
+	}
+
 	void setLighting(Lighting& lighting) {
 		setUniform("ambientLighting", lighting.ambient);
 		setUniform("diffuseLighting", lighting.diffuse);
 		setUniform("specularLighting", lighting.specular);
 		setUniform("lightDirection", lighting.direction);
 		setUniform("lightColor", lighting.color);
+	}
+
+	void setTextures() {
+		int textures[] = {
+			TEXTURE_SHOTGUN,
+			TEXTURE_GROUND,
+			TEXTURE_SUN,
+			TEXTURE_BUILDING,
+			TEXTURE_VIRUS,
+			TEXTURE_VIRUS_WOUNDED,
+			TEXTURE_FIRE,
+		};
+
+		setUniform("textures", TEXTURES_COUNT, textures);
 	}
 
 private:
