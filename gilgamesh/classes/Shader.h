@@ -1,9 +1,19 @@
 #pragma once
 
 #include "stdafx.h"
-#include "Texture.h"
 #include "Lighting.h"
 #include "ErrorHandler.h"
+
+enum TextureType {
+	TEXTURE_SHOTGUN,
+	TEXTURE_GROUND,
+	TEXTURE_SUN,
+	TEXTURE_BUILDING,
+	TEXTURE_VIRUS,
+	TEXTURE_VIRUS_WOUNDED,
+	TEXTURE_FIRE,
+	TEXTURES_COUNT
+};
 
 class Shader {
 private:
@@ -112,7 +122,7 @@ public:
 	}
 
 
-	void setUniform(const string& name, int size, int* value) {
+	void setUniform(const string& name, int size, int value[]) {
 		glUniform1iv(glGetUniformLocation(id, name.c_str()), size, value);
 	}
 
@@ -125,6 +135,8 @@ public:
 	}
 
 	void setTextures() {
+		shader->use();
+
 		int textures[] = {
 			TEXTURE_SHOTGUN,
 			TEXTURE_GROUND,
@@ -136,6 +148,9 @@ public:
 		};
 
 		setUniform("textures", TEXTURES_COUNT, textures);
+		setUniform("texture1", 0);
+		setUniform("texture2", 1);
+
 	}
 
 private:

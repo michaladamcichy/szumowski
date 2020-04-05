@@ -6,6 +6,8 @@ in vec3 normal;
 in vec4 fragmentPosition;
 
 uniform sampler2D textures[7];
+uniform sampler2D texture1;
+uniform sampler2D texture2;
 
 uniform float near;
 uniform float far;
@@ -22,9 +24,9 @@ float LinearizeDepth(float depth)
 void main()
 {
 	float depth = 1 - LinearizeDepth(gl_FragCoord.z) / far;
-	vec4 textureColor = texture(textures[6], uv);
-	
-	//vec4 output = vec4(1.0,1.0,1.0,1.0);
+	vec4 textureColor = texture(textures[2], uv);
+
+	//vec4 output = vec4(1.0 / divider,0.0,0.1 * divider,1.0);
 	vec4 output = vec4(textureColor.xyz * depth, textureColor.a);
 	FragColor = output;
 }

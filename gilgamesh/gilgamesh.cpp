@@ -15,7 +15,7 @@
 
 void init() {
 	Config::init();
-	
+
 	if (Config::get(LOG_ENABLED) == true) {
 		Log::enable();
 	}

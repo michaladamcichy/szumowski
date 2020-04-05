@@ -2,17 +2,18 @@
 
 #include "stdafx.h"
 #include "ErrorHandler.h"
+#include "Shader.h"
 
-enum TextureType {
-	TEXTURE_SHOTGUN,
-	TEXTURE_GROUND,
-	TEXTURE_SUN,
-	TEXTURE_BUILDING,
-	TEXTURE_VIRUS,
-	TEXTURE_VIRUS_WOUNDED,
-	TEXTURE_FIRE,
-	TEXTURES_COUNT
-};
+//enum TextureType {
+//	TEXTURE_SHOTGUN,
+//	TEXTURE_GROUND,
+//	TEXTURE_SUN,
+//	TEXTURE_BUILDING,
+//	TEXTURE_VIRUS,
+//	TEXTURE_VIRUS_WOUNDED,
+//	TEXTURE_FIRE,
+//	TEXTURES_COUNT
+//};
 
 class Texture
 {
@@ -108,6 +109,11 @@ public:
 		ErrorHandler::handleErrors();
 		glBindTexture(GL_TEXTURE_2D, id);
 		ErrorHandler::handleErrors();
+		/*if(this->type == TEXTURE_SHOTGUN)
+			Shader::getMainShader()->setUniform("texture1", 0);
+		else {
+			Shader::getMainShader()->setUniform("texture2", 1);
+		}*/
 	}
 
 	~Texture()
