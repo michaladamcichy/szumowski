@@ -148,12 +148,6 @@ public:
 		};
 
 		setUniform("textures", TEXTURES_COUNT, textures);
-		
-		setUniform("texture1", 0);
-		setUniform("texture2", 1);
-		setUniform("texture3", 2);
-		
-
 	}
 
 private:
