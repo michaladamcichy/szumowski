@@ -7,7 +7,7 @@ layout (location = 3) in float inTexture;
 out vec2 uv;
 out vec3 normal;
 out vec4 fragmentPosition;
-//out int texture;
+out float textureId;
 
 uniform mat4 cameraTransformation;
 uniform mat3 cameraRotations;
@@ -18,5 +18,5 @@ void main() {
 	uv = inUv;
 	normal =  normalize(cameraRotations * inNormal); //ALERT! nie testowane
 	fragmentPosition = vec4(inPosition, 1.0);
-	//texture = int(inTexture);
+	textureId = inTexture;
 };

@@ -32,7 +32,7 @@ public:
 
 		for (int r = 0; r < rows; r++) {
 			for (int c = 0; c < columns; c++) {
-				GameObject* object = new GameObject(Primitives::getCube(), TEXTURE_FIRE, vec3(r * step - distance/2, 0, c * step - distance/2));
+				GameObject* object = new GameObject(Primitives::getCube(), TextureType(c%TEXTURES_COUNT), vec3(r * step - distance/2, 0, c * step - distance/2));
 				objects.push_back(object);
 			}
 		}

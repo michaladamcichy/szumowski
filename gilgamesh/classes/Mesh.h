@@ -27,6 +27,10 @@ public:
 		this->vertices = vertices;
 		this->indices = indices;
 		this->texture = texture;
+
+		updateTexture(texture);
+
+		Log::done();
 	}
 
 	Mesh(Mesh* origin, TextureType texture) {
@@ -35,6 +39,8 @@ public:
 
 		vertices = origin->vertices;
 		indices = origin->indices;
+
+		updateTexture(texture);
 	}
 
 	void setTexture(TextureType texture) {
@@ -47,6 +53,12 @@ public:
 
 	vector <uint>& getIndices() {
 		return indices;
+	}
+
+	void updateTexture(TextureType texture) {
+		for (auto& vertex : vertices) {
+			vertex.texture = texture;
+		}
 	}
 
 	void update(mat4 transformation) {
