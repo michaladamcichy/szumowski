@@ -74,9 +74,6 @@
     <ClInclude Include="classes\Vertex.h">
       <Filter>Header Files\structures</Filter>
     </ClInclude>
-    <ClInclude Include="classes\Lighting.h">
-      <Filter>Header Files\structures</Filter>
-    </ClInclude>
     <ClInclude Include="classes\TimeManager.h">
       <Filter>Header Files\static</Filter>
     </ClInclude>

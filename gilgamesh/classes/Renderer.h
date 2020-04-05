@@ -5,6 +5,7 @@
 #include "Mesh.h"
 #include "RenderBuffer.h"
 #include "TimeManager.h"
+#include "Light.h"
 
 class Renderer {
 private:
@@ -13,6 +14,7 @@ private:
 	static RenderBuffer buffer;
 
 	static Camera* camera;
+	static Light* light;
 
 	static bool alreadyUpdated;
 public:
@@ -45,6 +47,10 @@ public:
 		Renderer::camera = camera;
 	}
 
+	static void attachLight(Light* light) {
+		Renderer::light = light;
+	}
+
 	static void addToQueue(Mesh* mesh) {
 		queue.push_back(mesh);
 	}
@@ -64,10 +70,11 @@ public:
 		Shader::getMainShader()->setUniform("near", Config::get(CAMERA_NEAR_PLANE));
 		Shader::getMainShader()->setUniform("far", Config::get(CAMERA_FAR_PLANE));
 
-		Shader::getMainShader()->setUniform("cameraPosition", vec3(0, 0, 1));
-		Shader::getMainShader()->setUniform("cameraDirection", vec3(0, 0, -1));
+		Shader::getMainShader()->setUniform("cameraPosition", camera->getPosition());
+		Shader::getMainShader()->setUniform("cameraDirection", camera->getDirection());
 		Shader::getMainShader()->setUniform("cameraTransformation", camera->getTransformation());
 		Shader::getMainShader()->setUniform("cameraRotations", camera->getRotations());
+		Shader::getMainShader()->setLight(light);
 
 		buffer.render();
 		TimeManager::stopRendering();
@@ -81,4 +88,5 @@ public:
 vector<Mesh*> Renderer::queue;
 RenderBuffer Renderer::buffer;
 Camera* Renderer::camera;
+Light* Renderer::light;
 bool Renderer::alreadyUpdated = false;

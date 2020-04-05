@@ -14,8 +14,12 @@ public:
 	vec3 color;
 	
 	Light(vec3 position = vec3(0.0, 0.0, 0.0), vec3 direction = Directions::DOWN, vec3 color = Colors::WHITE, float ambient = 1.0, float diffuse = 1.0, float specular = 1.0) {
+		init(position, direction, color, ambient, diffuse, specular);
+	}
+
+	void init(vec3 position = vec3(0.0, 0.0, 0.0), vec3 direction = Directions::DOWN, vec3 color = Colors::WHITE, float ambient = 1.0, float diffuse = 1.0, float specular = 1.0) {
 		this->position = position;
-		this->direction = direction;
+		this->direction = glm::normalize(direction);
 		this->color = color;
 
 		this->ambient = ambient;

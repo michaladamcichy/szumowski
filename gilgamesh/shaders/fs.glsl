@@ -1,6 +1,15 @@
 #version 330 core
 out vec4 FragColor;
 
+struct Light {
+	vec3 position;
+	float ambient;
+	float diffuse;
+	float specular;
+	vec3 direction;
+	vec3 color;
+};
+
 in vec2 uv;
 in vec3 normal;
 in vec4 fragmentPosition;
@@ -16,6 +25,8 @@ uniform float far;
 
 uniform vec3 cameraDirection;
 uniform vec3 cameraPosition;
+
+uniform Light light;
   
 float LinearizeDepth(float depth) 
 {
@@ -30,7 +41,10 @@ void main()
 	
 	vec4 textureColor = texture(textures[index], uv);
 
-	//vec4 output = vec4(1.0 / textureId, 0.0, 0.0, 1.0);
-	vec4 output = vec4(textureColor.xyz * depth, textureColor.a);
+	float ambient = light.ambient;
+	float diffuse = max(dot(normal, -light.direction), 0.0);
+
+	vec4 output = vec4(textureColor.xyz * (ambient + diffuse) * depth, textureColor.a);
+	//vec4 output = vec4(normal * depth, textureColor.a);
 	FragColor = output;
 }

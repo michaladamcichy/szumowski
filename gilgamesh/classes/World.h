@@ -15,7 +15,7 @@ private:
 	Player player;
 	
 	vector <GameObject*> objects;
-	vector <Light> lights {Light()};
+	Light light;
 
 	bool alreadyUpdated = false;
 
@@ -36,6 +36,8 @@ public:
 				objects.push_back(object);
 			}
 		}
+
+		light.init(vec3(0, 10, 0), Directions::DOWN, Colors::WHITE, 0.1, 0.9, 0.0);
 	}
 
 	void handleInput(Mouse& mouse, Keyboard& keyboard) {
@@ -53,7 +55,7 @@ public:
 			i++;
 			float change = i % 2 == 0 ? 0.1 : -0.1;
 			object->move(vec3(0, TimeManager::getFrameDuration() * change, 0));
-			float angle = i % 2 == 0 ? 5.0 : -5.0;
+			float angle = i % 2 == 0 ? 0.5 : -0.5;
 			angle *= TimeManager::getFrameDuration();
 			object->rotate(0, angle, 0);
 		}
@@ -63,6 +65,7 @@ public:
 
 	void draw() {
 		Renderer::attachCamera(this->getActiveCamera());
+		Renderer::attachLight(&light);
 		
 		for (GameObject* object : objects) {
 			Renderer::addToQueue(object->getMesh());

@@ -149,7 +149,6 @@
     <ClInclude Include="classes\GLFW.h" />
     <ClInclude Include="classes\Importer.h" />
     <ClInclude Include="classes\Keyboard.h" />
-    <ClInclude Include="classes\Lighting.h" />
     <ClInclude Include="classes\Log.h" />
     <ClInclude Include="classes\MathsUtils.h" />
     <ClInclude Include="classes\Mesh.h" />

@@ -62,7 +62,7 @@ public:
 	}
 
 	void update(mat4 transformation) {
-		mat3 rotations = mat3(transformation); //ALERT nietestowane
+		mat3 rotations = mat3(transpose(inverse(transformation)));
 		if (origin == NULL) {
 			Log::print("Trying to modify origin!");
 			assert(!"Trying to modify origin");
@@ -70,7 +70,7 @@ public:
 		else {
 			for (int i = 0; i < origin->getVertices().size(); i++) {
 				vertices[i].position = vec3(transformation * vec4(origin->getVertices()[i].position, 1.0));
-				vertices[i].normal = rotations * origin->getVertices()[i].normal; //ALERT nietestowane
+				vertices[i].normal = rotations * normalize(origin->getVertices()[i].normal);
 			}
 		}
 	}

@@ -1,7 +1,6 @@
 #pragma once
 
 #include "stdafx.h"
-#include "Lighting.h"
 #include "ErrorHandler.h"
 
 enum TextureType {
@@ -126,12 +125,13 @@ public:
 		glUniform1iv(glGetUniformLocation(id, name.c_str()), size, value);
 	}
 
-	void setLighting(Lighting& lighting) {
-		setUniform("ambientLighting", lighting.ambient);
-		setUniform("diffuseLighting", lighting.diffuse);
-		setUniform("specularLighting", lighting.specular);
-		setUniform("lightDirection", lighting.direction);
-		setUniform("lightColor", lighting.color);
+	void setLight(Light* light) {
+		setUniform("light.position", light->position);
+		setUniform("light.ambient", light->ambient);
+		setUniform("light.diffuse", light->diffuse);
+		setUniform("light.specular", light->specular);
+		setUniform("light.direction", light->direction);
+		setUniform("light.color", light->color);
 	}
 
 	void setTextures() {
