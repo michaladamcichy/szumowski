@@ -25,4 +25,12 @@ public:
 	static void matrixToEulerAngles(mat4 matrix) {
 
 	}
+
+	static float squareDistance(vec3 a, vec3 b) {
+		return (a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y) + (a.z - b.z) * (a.z - b.z);
+	}
+
+	static float dotProduct(vec3 a, vec3 b) {
+		return a.x * b.x + a.y * b.y + a.z * b.z;
+	}
 };

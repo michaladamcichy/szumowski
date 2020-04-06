@@ -12,6 +12,8 @@ private:
 	bool shift = false;
 	bool tab = false;
 	bool leftMouse = false;
+	bool f = false;
+	bool space = false;
 	int tabInertia = 0;
 public:
 	Keyboard() {
@@ -51,6 +53,15 @@ public:
 		return leftMouse;
 	}
 
+	bool isFPressed() {
+		return f;
+	}
+
+	bool isSpacePressed() {
+		return space;
+	}
+
+
 private:
 	static void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
 	{
@@ -79,6 +90,12 @@ private:
 		if (glfwGetKey(GLFW::getWindow(), GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS) {
 			shift = true;
 		}
+		if (glfwGetKey(GLFW::getWindow(), GLFW_KEY_F) == GLFW_PRESS) {
+			f = true;
+		}
+		if (glfwGetKey(GLFW::getWindow(), GLFW_KEY_SPACE) == GLFW_PRESS) {
+			space = true;
+		}
 		if (glfwGetMouseButton(GLFW::getWindow(), GLFW_MOUSE_BUTTON_1) == GLFW_PRESS) {
 			leftMouse = true;
 		}
@@ -103,6 +120,12 @@ private:
 		}
 		if (glfwGetKey(GLFW::getWindow(), GLFW_KEY_LEFT_SHIFT) == GLFW_RELEASE) {
 			shift = false;
+		}
+		if (glfwGetKey(GLFW::getWindow(), GLFW_KEY_F) == GLFW_RELEASE) {
+			f = false;
+		}
+		if (glfwGetKey(GLFW::getWindow(), GLFW_KEY_SPACE) == GLFW_RELEASE) {
+			space = false;
 		}
 		if (glfwGetMouseButton(GLFW::getWindow(), GLFW_MOUSE_BUTTON_1) == GLFW_RELEASE) {
 			leftMouse = false;

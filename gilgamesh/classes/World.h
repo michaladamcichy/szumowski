@@ -12,6 +12,7 @@
 #include "Sun.h"
 #include "Building.h"
 #include "BuildingsMap.h"
+#include "MathsUtils.h"
 
 class World : public InputHandler {
 private:
@@ -24,9 +25,11 @@ private:
 	vector <Building*> buildings;
 	vector <Virus*> viruses;
 	Sun* sun;
-	Light light;
 
 	bool alreadyUpdated = false;
+
+	GameObject* aim;
+	GameObject* playerMarker;
 
 public:
 	World() {
@@ -44,6 +47,7 @@ public:
 			for (int c = 0; c < columns; c++) {
 				Building* building = new Building(vec3(float(r) * step - distance / 2.0, Config::get(DEFAULT_BUILDING_DIMENSIONS).y / 2.0, float(c) * step - distance / 2.0));
 				buildings.push_back(building);
+				objects.push_back(building);
 			}
 		}
 
@@ -58,18 +62,22 @@ public:
 			for (int c = 0; c < columns; c++) {
 				Virus* virus = new Virus(vec3(r * step - distance/2, 2.0, c * step - distance/2));
 				viruses.push_back(virus);
+				objects.push_back(virus);
 			}
 		}
 
 		GameObject* ground = new GameObject(Primitives::getQuad(), TEXTURE_FIRE, vec3(0,0,0), Config::get(GROUND_DIMENSIONS));
 		ground->rotatePitch(Constants::HALF_PI);
-
 		objects.push_back(ground);
 
 		sun = new Sun();
 		objects.push_back(sun);
 
-		light.init(vec3(0, 10, 0), Directions::DOWN, Colors::WHITE, 0.5, 0.9, 0.0);
+		vec3 markerSize = vec3(0.05);
+		aim = new GameObject(Primitives::getCube(), TEXTURE_FIRE, player.getPosition(), markerSize);
+		objects.push_back(aim);
+		playerMarker = new GameObject(Primitives::getCube(), TEXTURE_VIRUS, vec3(0,0,0), markerSize);
+		objects.push_back(playerMarker);
 	}
 
 	void handleInput(Mouse& mouse, Keyboard& keyboard) {
@@ -82,15 +90,26 @@ public:
 	}
 
 	void update() {
-		int i = 0;
-		//for (auto& object : objects) {
-		//	i++;
-		//	float change = i % 2 == 0 ? 0.1 : -0.1;
-		//	object->move(vec3(0, TimeManager::getFrameDuration() * change, 0));
-		//	float angle = i % 2 == 0 ? 0.5 : -0.5;
-		//	angle *= TimeManager::getFrameDuration();
-		//	object->rotate(0, angle, 0);
-		//}
+
+		if (player.isShooting()) {
+			vector <Virus*> potentiallyHit;
+			for (auto& virus : viruses) {
+				if (virus->isHit(player.getPosition(), player.getAimingDirection())) {
+					potentiallyHit.push_back(virus);
+				}
+			}
+
+			if (potentiallyHit.size() > 0) {
+				Player* playerPointer = &player;
+
+				std::sort(std::begin(potentiallyHit), std::end(potentiallyHit), [playerPointer] (Virus* a, Virus* b)
+					{return  MathsUtils::squareDistance(a->getPosition(), playerPointer->getPosition()) > MathsUtils::squareDistance(b->getPosition(), playerPointer->getPosition()); }
+			);
+
+				Virus* hit = potentiallyHit[0];
+				hit->move(vec3(0, 2, 0));
+			}
+		}
 
 		Building* building = buildingsMap.getNearBuilding(&player);
 
@@ -99,33 +118,25 @@ public:
 			player.handleCollision(building);
 		}
 
-		for (auto& building : buildings) {
-			building->update();
-		}
-
 		for (auto& virus : viruses) {
 			virus->lookAtPlayer(getActiveCamera());
 		}
 
 		sun->fixPosition(getActiveCamera());
 
+		aim->setPosition(player.getPosition() + player.getAimingDirection());
+		playerMarker->setPosition(player.getPosition());
+
+		player.update();
 		updateObjects();
 	}
 
 	void draw() {
 		Renderer::attachCamera(this->getActiveCamera());
-		Renderer::attachLight(&light);
+		Renderer::attachLight(sun->getLight());
 		
 		for (GameObject* object : objects) {
 			Renderer::addToQueue(object->getMesh());
-		}
-
-		for (auto& building : buildings) {
-			Renderer::addToQueue(building->getMesh());
-		}
-
-		for (Virus* virus : viruses) {
-			Renderer::addToQueue(virus->getMesh());
 		}
 	}
 
@@ -134,9 +145,6 @@ private:
 		if (Config::get(DYNAMIC_RENDERING_ENABLED) == true || !alreadyUpdated) {
 			for (GameObject* object : objects) {
 				object->update();
-			}
-			for (Virus* virus : viruses) {
-				virus->update();
 			}
 
 			alreadyUpdated = true;

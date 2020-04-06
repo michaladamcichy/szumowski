@@ -8,18 +8,18 @@ public:
 	Camera camera;
 	vec3 position;
 	float radius;
-	float height = 2;
 
-	bool isShooting = false;
-	bool isHurt = false;
+	bool shooting = false;
+	bool hurt = false;
 	int hp = 100;
+
+	float shootingTimeout = 0;
 
 public:
 	Player() {
 		position = Config::get(PLAYER_INITIAL_POSITION);
 		radius = Config::get(PLAYER_RADIUS);
 		vec3 cameraTranslation = position;
-		cameraTranslation.y = height;
 		camera.move(cameraTranslation);
 	}
 
@@ -66,16 +66,23 @@ public:
 			position += right * Config::get(PLAYER_SPEED) * boost;
 		}
 
-		if (keyboard.isLeftMousePressed()) {
-			isShooting = true;
+		if (keyboard.isLeftMousePressed() || keyboard.isSpacePressed()) {
+			if (shootingTimeout == 0) {
+				shooting = true;
+
+				shootingTimeout = Config::get(SHOOTING_TIMEOUT);
+			}
 		}
 		else {
-			isShooting = false;
+			shooting = false;
 		}
 
 		vec3 cameraPosition = position;
-		cameraPosition.y = height;
 		camera.setPosition(cameraPosition);
+	}
+
+	bool isShooting() {
+		return shooting;
 	}
 
 	void handleCollision(GameObject* object)
@@ -108,6 +115,11 @@ public:
 				this->position.z = closestZ + sign * std::sqrt(rSquared - dx * dx);
 			}
 		}
+	}
+
+	void update() {
+		shootingTimeout -= TimeManager::getFrameDuration();
+		if (shootingTimeout < 0) shootingTimeout = 0;
 	}
 
 private:
