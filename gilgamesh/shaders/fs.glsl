@@ -38,8 +38,12 @@ void main()
 {
 	float depth = 1 - LinearizeDepth(gl_FragCoord.z) / far;
 	int index = int(round(textureId));
-	
+
 	vec4 textureColor = texture(textures[index], uv);
+
+	if(textureColor.a == 0.0) {
+		discard;
+	}
 
 	float ambient = light.ambient;
 	float diffuse = max(dot(normal, -light.direction), 0.0);

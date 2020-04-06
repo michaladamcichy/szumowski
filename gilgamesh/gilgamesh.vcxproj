@@ -168,6 +168,7 @@
     <ClInclude Include="InputHandler.h" />
     <ClInclude Include="Light.h" />
     <ClInclude Include="RenderBuffer.h" />
+    <ClInclude Include="Virus.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Uwagi.txt" />
