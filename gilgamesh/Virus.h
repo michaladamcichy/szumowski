@@ -44,8 +44,6 @@ public:
 
 		float maxActiveTime = 10;
 
-		//if()
-
 		if (MathsUtils::squareDistance(player->getPosition(), this->getPosition()) > this->radius + player->getRadius() - threshold) {
 			vec3 direction = glm::normalize(player->getPosition() - this->getPosition());
 			float amount = Config::get(VIRUS_SPEED);
@@ -54,6 +52,34 @@ public:
 			this->move(translation);
 		}
 	}
+
+
+        void followPath(vector<vec2i> path) {
+            if (path.size() > 0) {
+                auto nextTile = path.back();
+                auto currentTile = getTile(this->getPosition());
+                if (currentTile != nextTile) {
+                    auto nextPos = getPos(nextTile);
+                    vec3 direction = glm::normalize(nextPos - this->getPosition());
+                    float amount = Config::get(VIRUS_SPEED);
+                    vec3 translation = direction * amount;
+                    this->move(translation);
+                } else {
+                    path.pop_back();
+                }
+            }
+        }
+
+        inline vec2i getTile(vec3 p) {
+                return {(int)((p.x + 4.0f*40.0f + 5.0f) / 10.0f),
+                        (int)((p.z + 4.0f*40.0f + 5.0f) / 10.0f)};
+        }
+
+        inline vec3 getPos(vec2i p) {
+                return {((float)p.x*10) - 4.0f*40.0f,
+                        0.0f,
+                        ((float)p.x*10) - 4.0f*40.0f};
+        }
 
 	void prepareForDeath() {
 		deathTimeout = -Config::get(VIRUS_DEATH_DURATION);

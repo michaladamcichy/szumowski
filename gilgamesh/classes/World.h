@@ -14,12 +14,14 @@
 #include "BuildingsMap.h"
 #include "MathsUtils.h"
 
+
 class World : public InputHandler {
 private:
 	Camera globalCamera;
 	Player player;
 	
 	BuildingsMap buildingsMap;
+        TileMap tileMap;
 
 	vector <GameObject*> objects;
 	vector <Building*> buildings;
@@ -53,6 +55,14 @@ public:
 		}
 
 		buildingsMap.init(buildings, step);
+
+                tileMap.resize(4*rows);
+		for (int r = 0; r < 4*rows; r++) {
+                        tileMap[r].resize(4*columns);
+			for (int c = 0; c < 4*columns; c++) {
+                                tilemap[r][c] = (r%4 == 0) ? true : false;
+                        }
+                }
 
 		step = 2;
 		distance = rows * step;
@@ -147,8 +157,34 @@ public:
 		}
 
 		for (auto& virus : viruses) {
-			virus->chasePlayer(&player);
-			virus->lookAtPlayer(getActiveCamera());
+                        vec3 virusPos = virus->getPosition();
+                        float dist = MathUtils::squareDistance(virusPos, player.position);
+                        float followThreshold = 20.0f;
+                        if (dist < followThreshold*followThreshold) {
+                                vec2i virusTile = getTile(virusPos);
+                                vec2i playerTile = getTile(player.position);
+                                if (virusTile != playerTile) {
+                                        virus->followPath(MathUtils::findPath(tileMap, virusTile, playerTile));
+                                } else {
+                                        virus->chasePlayer(&player);
+                                }
+                        }
+                        else {
+                                Building* building = buildingsMap.getNearBuilding(virus);
+                                float nearestX = glm::clamp(virusPos.x
+                                                            building.getPosition().x-5.0f,
+                                                            building.getPosition().x+5.0f);
+                                float nearestZ = glm::clamp(virusPos.z
+                                                            building.getPosition().z-5.0f,
+                                                            building.getPosition().z+5.0f);
+                                vec3 nearest(nearestX, virusPos.y, nearestZ);
+                                dist = MathUtils::sqareDistance(nearest, virus.getPosition());
+                                if (dist > 2.0f) {
+                                        vector<vec2i> path;
+                                        path.push_back(getTile(building.getPosition()));
+                                        virus->followPath(path);
+                        }
+                        virus->lookAtPlayer(getActiveCamera());
 		}
 
 		sun->fixPosition(getActiveCamera());
@@ -178,6 +214,11 @@ public:
 	}
 
 private:
+        inline vec2i getTile(vec3 p) {
+            return {(int)((p.x + 4.0f*40.0f + 5.0f) / 10.0f),
+                    (int)((p.z + 4.0f*40.0f + 5.0f) / 10.0f)};
+        }
+
 	void updateObjects() {
 		if (Config::get(DYNAMIC_RENDERING_ENABLED) == true || !alreadyUpdated) {
 			for (GameObject* object : objects) {
