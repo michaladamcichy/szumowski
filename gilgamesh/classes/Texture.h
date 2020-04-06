@@ -82,8 +82,8 @@ public:
 		shotgun.init(Config::get(TEXTURES_PATH) + (Config::get(HD_TEXTURES_ENABLED) ? "shotgunHD.jpg" : "shotgun.jpg"), TEXTURE_SHOTGUN);
 		ground.init(Config::get(TEXTURES_PATH) + (Config::get(HD_TEXTURES_ENABLED) ? "groundHD.jpg" : "ground.jpg"), TEXTURE_GROUND);
 		sun.init(Config::get(TEXTURES_PATH) + (Config::get(HD_TEXTURES_ENABLED) ? "sunHD.png" : "sun.png"), TEXTURE_SUN);
-		building.init(Config::get(TEXTURES_PATH) + (Config::get(HD_TEXTURES_ENABLED) ? "buildingHD.jpg" : "bulding.jpg"), TEXTURE_BUILDING);
-		virus.init(Config::get(TEXTURES_PATH) + (Config::get(HD_TEXTURES_ENABLED) ? "virusHD.png" : "virus.png"), TEXTURE_VIRUS);
+		building.init(Config::get(TEXTURES_PATH) + (Config::get(HD_TEXTURES_ENABLED) ? "buildingHD.jpg" : "building.jpg"), TEXTURE_BUILDING);
+		virus.init(Config::get(TEXTURES_PATH) + (Config::get(HD_TEXTURES_ENABLED) ? "virusHD.png" : "virus.jpg"), TEXTURE_VIRUS);
 		virusWounded.init(Config::get(TEXTURES_PATH) + (Config::get(HD_TEXTURES_ENABLED) ? "virusWounded.png" : "virusWoundedHD.png"), TEXTURE_VIRUS_WOUNDED);
 		fire.init(Config::get(TEXTURES_PATH) + (Config::get(HD_TEXTURES_ENABLED) ? "fire.png" : "fireHD.png"), TEXTURE_FIRE);
 

@@ -22,6 +22,8 @@
 #include<glm/gtc/constants.hpp>
 #include<stb_image.h>
 
+#include<windows.h> //ALERT
+
 using std::cout;
 using std::vector;
 using std::map;

@@ -40,6 +40,7 @@ int main(int argc, char** argv)
 	World world;
 	
 	while (!glfwWindowShouldClose(GLFW::getWindow())) {
+		Sleep(Config::get(FRAME_DELAY));
 		TimeManager::startCpu();
 
 		GLFW::handleInput();
