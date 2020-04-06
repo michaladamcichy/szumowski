@@ -8,6 +8,7 @@
 #include "Mesh.h"
 #include "Player.h"
 #include "Primitives.h"
+#include "Virus.h"
 
 class World : public InputHandler {
 private:
@@ -15,6 +16,7 @@ private:
 	Player player;
 	
 	vector <GameObject*> objects;
+	vector <Virus*> viruses;
 	Light light;
 
 	bool alreadyUpdated = false;
@@ -23,21 +25,26 @@ public:
 	World() {
 		globalCamera = Camera(vec3(0, 10, 10));
 
-		int rows = 100;
-		int columns = 100;
+		int rows = 20;
+		int columns = 20;
 
-		float step = 2.0;
+		float step = 40.0;
 
 		float distance = rows * step;
 
 		for (int r = 0; r < rows; r++) {
 			for (int c = 0; c < columns; c++) {
-				GameObject* object = new GameObject(Primitives::getQuad(), TextureType(c%TEXTURES_COUNT), vec3(r * step - distance/2, 0, c * step - distance/2));
+				GameObject* object = new GameObject(Primitives::getCube(), TEXTURE_GROUND, vec3(r * step - distance/2, 20.0, c * step - distance/2), Config::get(DEFAULT_BUILDING_DIMENSIONS));
 				objects.push_back(object);
 			}
 		}
 
-		light.init(vec3(0, 10, 0), Directions::DOWN, Colors::WHITE, 0.1, 0.9, 0.0);
+		GameObject* ground = new GameObject(Primitives::getQuad(), TEXTURE_FIRE, vec3(0,0,0), Config::get(GROUND_DIMENSIONS));
+		ground->rotatePitch(Constants::HALF_PI);
+
+		objects.push_back(ground);
+
+		light.init(vec3(0, 10, 0), Directions::DOWN, Colors::WHITE, 0.5, 0.9, 0.0);
 	}
 
 	void handleInput(Mouse& mouse, Keyboard& keyboard) {
@@ -51,13 +58,17 @@ public:
 
 	void update() {
 		int i = 0;
-		for (auto& object : objects) {
-			i++;
-			float change = i % 2 == 0 ? 0.1 : -0.1;
-			object->move(vec3(0, TimeManager::getFrameDuration() * change, 0));
-			float angle = i % 2 == 0 ? 0.5 : -0.5;
-			angle *= TimeManager::getFrameDuration();
-			object->rotate(0, angle, 0);
+		//for (auto& object : objects) {
+		//	i++;
+		//	float change = i % 2 == 0 ? 0.1 : -0.1;
+		//	object->move(vec3(0, TimeManager::getFrameDuration() * change, 0));
+		//	float angle = i % 2 == 0 ? 0.5 : -0.5;
+		//	angle *= TimeManager::getFrameDuration();
+		//	object->rotate(0, angle, 0);
+		//}
+
+		for (auto& virus : viruses) {
+			virus->lookAtPlayer(getActiveCamera());
 		}
 
 		updateObjects();
@@ -70,46 +81,22 @@ public:
 		for (GameObject* object : objects) {
 			Renderer::addToQueue(object->getMesh());
 		}
+
+		for (Virus* virus : viruses) {
+			Renderer::addToQueue(virus->getMesh());
+		}
 	}
 
 private:
 	void updateObjects() {
 		if (Config::get(DYNAMIC_RENDERING_ENABLED) == true || !alreadyUpdated) {
-
-			if (Config::get(MULTITHREADING_ENABLED) == true) {
-				int threadsCount = Config::get(THREADS_COUNT);
-				int work = objects.size() / threadsCount;
-
-				thread** threads = new thread * [threadsCount];
-
-
-				vector <GameObject*>* objects = &this->objects;
-
-				for (int i = 0; i < threadsCount - 1; i++) {
-					threads[i] = new thread([objects, i, threadsCount, work]() mutable {
-						for (int j = i * work; j < i * work + work; j++) {
-							(*objects)[j]->update();
-						}
-					});
-				}
-
-				threads[threadsCount - 1] = new thread([objects, threadsCount, work]() mutable {
-					for (int j = (threadsCount - 1) * work; j < objects->size(); j++) {
-						(*objects)[j]->update();
-					}
-				});
-
-				for (int i = 0; i < threadsCount; i++) {
-					threads[i]->join();
-				}
-
-				delete[] threads;
+			for (GameObject* object : objects) {
+				object->update();
 			}
-			else {
-				for (GameObject* object : objects) {
-					object->update();
-				}
+			for (Virus* virus : viruses) {
+				virus->update();
 			}
+
 			alreadyUpdated = true;
 		}
 	}

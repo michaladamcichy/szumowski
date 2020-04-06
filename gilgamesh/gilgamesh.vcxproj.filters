@@ -122,6 +122,9 @@
     <ClInclude Include="RenderBuffer.h">
       <Filter>Header Files\nonstatic</Filter>
     </ClInclude>
+    <ClInclude Include="Virus.h">
+      <Filter>Header Files\nonstatic</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="Uwagi.txt">
