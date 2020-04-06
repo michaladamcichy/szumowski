@@ -85,6 +85,10 @@ public:
 		this->position += translation;
 	}
 
+	void setPosition(vec3 position) {
+		this->position = position;
+	}
+
 	void rotate(float yaw, float pitch = 0, float roll = 0) {
 		this->yaw += yaw;
 		handleAngleOverflow(this->yaw);

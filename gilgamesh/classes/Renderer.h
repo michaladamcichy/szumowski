@@ -43,6 +43,11 @@ public:
 		glClear(GL_COLOR_BUFFER_BIT);
 	}
 
+	static void drawColor(vec3 color) {
+		glClearColor(color.r, color.g, color.b, 1.0);
+		glClear(GL_COLOR_BUFFER_BIT);
+	}
+
 	static void attachCamera(Camera* camera) {
 		Renderer::camera = camera;
 	}
@@ -59,6 +64,7 @@ public:
 		TimeManager::stopCpu();
 		TimeManager::startGpu();
 
+		Renderer::drawColor(Config::get(SKY_COLOR));
 		if (Config::get(DYNAMIC_RENDERING_ENABLED) == true || !alreadyUpdated) {
 			buffer.update(queue);
 		}

@@ -79,13 +79,13 @@ public:
 	}
 
 	static void loadTextures() {
-		shotgun.init(Config::get(TEXTURES_PATH) + "shotgun.jpg", TEXTURE_SHOTGUN);
-		ground.init(Config::get(TEXTURES_PATH) + "ground.jpg", TEXTURE_GROUND);
-		sun.init(Config::get(TEXTURES_PATH) + "sun.png", TEXTURE_SUN);
-		building.init(Config::get(TEXTURES_PATH) + "building.jpg", TEXTURE_BUILDING);
-		virus.init(Config::get(TEXTURES_PATH) + "virusHD.png", TEXTURE_VIRUS);
-		virusWounded.init(Config::get(TEXTURES_PATH) + "virusWounded.png", TEXTURE_VIRUS_WOUNDED);
-		fire.init(Config::get(TEXTURES_PATH) + "fire.png", TEXTURE_FIRE);
+		shotgun.init(Config::get(TEXTURES_PATH) + (Config::get(HD_TEXTURES_ENABLED) ? "shotgunHD.jpg" : "shotgun.jpg"), TEXTURE_SHOTGUN);
+		ground.init(Config::get(TEXTURES_PATH) + (Config::get(HD_TEXTURES_ENABLED) ? "groundHD.jpg" : "ground.jpg"), TEXTURE_GROUND);
+		sun.init(Config::get(TEXTURES_PATH) + (Config::get(HD_TEXTURES_ENABLED) ? "sunHD.png" : "sun.png"), TEXTURE_SUN);
+		building.init(Config::get(TEXTURES_PATH) + (Config::get(HD_TEXTURES_ENABLED) ? "buildingHD.jpg" : "bulding.jpg"), TEXTURE_BUILDING);
+		virus.init(Config::get(TEXTURES_PATH) + (Config::get(HD_TEXTURES_ENABLED) ? "virusHD.png" : "virus.png"), TEXTURE_VIRUS);
+		virusWounded.init(Config::get(TEXTURES_PATH) + (Config::get(HD_TEXTURES_ENABLED) ? "virusWounded.png" : "virusWoundedHD.png"), TEXTURE_VIRUS_WOUNDED);
+		fire.init(Config::get(TEXTURES_PATH) + (Config::get(HD_TEXTURES_ENABLED) ? "fire.png" : "fireHD.png"), TEXTURE_FIRE);
 
 		useTextures();
 	}

@@ -9,6 +9,7 @@
 #include "Player.h"
 #include "Primitives.h"
 #include "Virus.h"
+#include "Sun.h"
 
 class World : public InputHandler {
 private:
@@ -17,6 +18,7 @@ private:
 	
 	vector <GameObject*> objects;
 	vector <Virus*> viruses;
+	Sun* sun;
 	Light light;
 
 	bool alreadyUpdated = false;
@@ -54,6 +56,9 @@ public:
 
 		objects.push_back(ground);
 
+		sun = new Sun();
+		objects.push_back(sun);
+
 		light.init(vec3(0, 10, 0), Directions::DOWN, Colors::WHITE, 0.5, 0.9, 0.0);
 	}
 
@@ -80,6 +85,8 @@ public:
 		for (auto& virus : viruses) {
 			virus->lookAtPlayer(getActiveCamera());
 		}
+
+		sun->fixPosition(getActiveCamera());
 
 		updateObjects();
 	}
