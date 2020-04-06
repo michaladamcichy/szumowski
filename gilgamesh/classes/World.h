@@ -183,6 +183,7 @@ public:
                                         vector<vec2i> path;
                                         path.push_back(getTile(building.getPosition()));
                                         virus->followPath(path);
+                                }
                         }
                         virus->lookAtPlayer(getActiveCamera());
 		}
