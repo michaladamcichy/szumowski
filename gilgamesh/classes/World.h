@@ -34,15 +34,17 @@ public:
 
 		float distance = rows * step;
 
-		//for (int r = 0; r < rows; r++) {
-		//	for (int c = 0; c < columns; c++) {
-		//		GameObject* object = new GameObject(Primitives::getCube(), TEXTURE_GROUND, vec3(r * step - distance/2, 20.0, c * step - distance/2), Config::get(DEFAULT_BUILDING_DIMENSIONS));
-		//		objects.push_back(object);
-		//	}
-		//}
+		for (int r = 0; r < rows; r++) {
+			for (int c = 0; c < columns; c++) {
+				GameObject* object = new GameObject(Primitives::getCube(), TEXTURE_GROUND, vec3(r * step - distance/2, 20.0, c * step - distance/2), Config::get(DEFAULT_BUILDING_DIMENSIONS));
+				objects.push_back(object);
+			}
+		}
 
 		step = 2;
 		distance = rows * step;
+
+		vec3 virusesTranslation = vec3(0, 0, Config::get(GROUND_DIMENSIONS).x / 2);
 
 		for (int r = 0; r < rows; r++) {
 			for (int c = 0; c < columns; c++) {
