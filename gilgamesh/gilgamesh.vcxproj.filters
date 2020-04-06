@@ -89,9 +89,6 @@
     <ClInclude Include="classes\Keyboard.h">
       <Filter>Header Files\nonstatic</Filter>
     </ClInclude>
-    <ClInclude Include="classes\World.h">
-      <Filter>Header Files\nonstatic</Filter>
-    </ClInclude>
     <ClInclude Include="classes\Texture.h">
       <Filter>Header Files\nonstatic</Filter>
     </ClInclude>
@@ -133,6 +130,9 @@
     </ClInclude>
     <ClInclude Include="Building.h">
       <Filter>Header Files\nonstatic</Filter>
+    </ClInclude>
+    <ClInclude Include="classes\World.h">
+      <Filter>Header Files\static</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

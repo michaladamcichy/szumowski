@@ -8,6 +8,8 @@
 class Virus : public GameObject {
 private:
 	float radius;
+	float restTimeout;
+	float deathTimeout = 0;
 public:
 	Virus(vec3 position) : GameObject(Primitives::getQuad(), TEXTURE_VIRUS, position, Config::get(VIRUS_DIMENSIONS)) {
 		radius = Config::get(VIRUS_DIMENSIONS).x;
@@ -35,5 +37,37 @@ public:
 		else return true;
 		//}
 	}
+
+	void chasePlayer(Player* player) {
+		float threshold = 0.2;
+		float maxRestTimeout = 5;
+
+		float maxActiveTime = 10;
+
+		//if()
+
+		if (MathsUtils::squareDistance(player->getPosition(), this->getPosition()) > this->radius + player->getRadius() - threshold) {
+			vec3 direction = glm::normalize(player->getPosition() - this->getPosition());
+			float amount = Config::get(VIRUS_SPEED);
+			vec3 translation = direction * amount;
+
+			this->move(translation);
+		}
+	}
+
+	void prepareForDeath() {
+		deathTimeout = -Config::get(VIRUS_DEATH_DURATION);
+	}
+
+	bool isAlreadyDead() {
+		if (deathTimeout > 0) return true; else return false;
+	}
+
+	void handleDeathTimout() {
+		deathTimeout += 0.1;
+	}
+	//void update() {
+	//	GameObject::update();
+	//}
 private:
 };

@@ -23,7 +23,9 @@ enum ConfigFloat {
 	CAMERA_BOOST,
 	SUN_SIZE,
 	PLAYER_RADIUS,
-	SHOOTING_TIMEOUT
+	SHOOTING_TIMEOUT,
+	VIRUS_SPEED,
+	VIRUS_DEATH_DURATION
 };
 
 enum ConfigInt {
@@ -103,6 +105,8 @@ public:
 		floats[SUN_SIZE] = 1000;
 		floats[PLAYER_RADIUS] = 1.0;
 		floats[SHOOTING_TIMEOUT] = 0; //ALERT
+		floats[VIRUS_SPEED] = 0.1; //ALERT
+		floats[VIRUS_DEATH_DURATION] = 1.0;
 
 		bools[LOG_ENABLED] = true;
 		bools[DYNAMIC_RENDERING_ENABLED] = true;

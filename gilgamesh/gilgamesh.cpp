@@ -14,6 +14,8 @@
 #include "MathsUtils.h"
 
 void init() {
+	srand(time(NULL));
+
 	Config::init();
 
 	if (Config::get(LOG_ENABLED) == true) {

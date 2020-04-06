@@ -24,6 +24,7 @@ private:
 	vector <GameObject*> objects;
 	vector <Building*> buildings;
 	vector <Virus*> viruses;
+	vector <Virus*> deadViruses;
 	Sun* sun;
 
 	bool alreadyUpdated = false;
@@ -58,12 +59,24 @@ public:
 
 		vec3 virusesTranslation = vec3(0, 0, Config::get(GROUND_DIMENSIONS).x / 2);
 
-		for (int r = 0; r < rows; r++) {
-			for (int c = 0; c < columns; c++) {
-				Virus* virus = new Virus(vec3(r * step - distance/2, 2.0, c * step - distance/2));
-				viruses.push_back(virus);
-				objects.push_back(virus);
-			}
+		//for (int r = 0; r < rows; r++) {
+		//	for (int c = 0; c < columns; c++) {
+		//		Virus* virus = new Virus(vec3(r * step - distance/2, 2.0, c * step - distance/2));
+		//		viruses.push_back(virus);
+		//		objects.push_back(virus);
+		//	}
+		//}
+
+		float trans = Config::get(GROUND_DIMENSIONS).x / 40;
+		float maxheight = 20;
+		float range = Config::get(GROUND_DIMENSIONS).x / 40;;
+		for (float x = -range; x < range; x+=1.0) {
+			Virus* virus = new Virus(vec3(x, 2.0, cos(x) * range));
+			viruses.push_back(virus);
+			//objects.push_back(virus);
+			virus = new Virus(vec3(x, 2.0, -cos(x) * range));
+			viruses.push_back(virus);
+			//objects.push_back(virus);
 		}
 
 		GameObject* ground = new GameObject(Primitives::getQuad(), TEXTURE_FIRE, vec3(0,0,0), Config::get(GROUND_DIMENSIONS));
@@ -77,7 +90,7 @@ public:
 		aim = new GameObject(Primitives::getCube(), TEXTURE_FIRE, player.getPosition(), markerSize);
 		objects.push_back(aim);
 		playerMarker = new GameObject(Primitives::getCube(), TEXTURE_VIRUS, vec3(0,0,0), markerSize);
-		objects.push_back(playerMarker);
+		//objects.push_back(playerMarker);
 	}
 
 	void handleInput(Mouse& mouse, Keyboard& keyboard) {
@@ -107,7 +120,22 @@ public:
 			);
 
 				Virus* hit = potentiallyHit[0];
-				hit->move(vec3(0, 2, 0));
+				hit->prepareForDeath();
+				//deadViruses.push_back(hit);
+
+				for (int i = 0; i > viruses.size(); i++) {
+					if (viruses[i] == hit) {
+						viruses.erase(viruses.begin() + i);
+					}
+				}
+			}
+		}
+
+		for (int index = 0; index < deadViruses.size(); index++) {
+			deadViruses[index]->handleDeathTimout();
+			if (deadViruses[index]->isAlreadyDead()) {
+				delete deadViruses[index];
+				deadViruses.erase(deadViruses.begin() + index);
 			}
 		}
 
@@ -119,6 +147,7 @@ public:
 		}
 
 		for (auto& virus : viruses) {
+			virus->chasePlayer(&player);
 			virus->lookAtPlayer(getActiveCamera());
 		}
 
@@ -138,6 +167,14 @@ public:
 		for (GameObject* object : objects) {
 			Renderer::addToQueue(object->getMesh());
 		}
+
+		for (auto& virus : viruses) {
+			Renderer::addToQueue(virus->getMesh());
+		}
+
+		for (auto& deadVirus : deadViruses) {
+			Renderer::addToQueue(deadVirus->getMesh());
+		}
 	}
 
 private:
@@ -145,6 +182,14 @@ private:
 		if (Config::get(DYNAMIC_RENDERING_ENABLED) == true || !alreadyUpdated) {
 			for (GameObject* object : objects) {
 				object->update();
+			}
+
+			for (auto& virus : viruses) {
+				virus->update();
+			}
+			
+			for (auto& deadVirus : deadViruses) {
+				deadVirus->update();
 			}
 
 			alreadyUpdated = true;
