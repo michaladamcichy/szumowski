@@ -36,6 +36,7 @@ public:
 	{
 		this->type = type;
 
+		stbi_set_flip_vertically_on_load(true);
 		unsigned char* data = stbi_load(path.c_str(), &width, &height, &channelsCount, 0);
 
 		if (data) {
