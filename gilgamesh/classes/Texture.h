@@ -4,17 +4,6 @@
 #include "ErrorHandler.h"
 #include "Shader.h"
 
-//enum TextureType {
-//	TEXTURE_SHOTGUN,
-//	TEXTURE_GROUND,
-//	TEXTURE_SUN,
-//	TEXTURE_BUILDING,
-//	TEXTURE_VIRUS,
-//	TEXTURE_VIRUS_WOUNDED,
-//	TEXTURE_FIRE,
-//	TEXTURES_COUNT
-//};
-
 class Texture
 {
 private:
@@ -22,6 +11,8 @@ private:
 	static Texture ground;
 	static Texture sun;
 	static Texture building;
+	static Texture buildingGrowing;
+	static Texture buildingDecreasing;
 	static Texture virus;
 	static Texture virusWounded;
 	static Texture fire;
@@ -83,6 +74,8 @@ public:
 		ground.init(Config::get(TEXTURES_PATH) + (Config::get(HD_TEXTURES_ENABLED) ? "groundHD.jpg" : "ground.jpg"), TEXTURE_GROUND);
 		sun.init(Config::get(TEXTURES_PATH) + (Config::get(HD_TEXTURES_ENABLED) ? "sunHD.png" : "sun.png"), TEXTURE_SUN);
 		building.init(Config::get(TEXTURES_PATH) + (Config::get(HD_TEXTURES_ENABLED) ? "buildingHD.jpg" : "building.jpg"), TEXTURE_BUILDING);
+		buildingGrowing.init(Config::get(TEXTURES_PATH) + (Config::get(HD_TEXTURES_ENABLED) ? "buildingGrowingHD.jpg" : "buildingGrowing.jpg"), TEXTURE_BUILDING_GROWING);
+		buildingDecreasing.init(Config::get(TEXTURES_PATH) + (Config::get(HD_TEXTURES_ENABLED) ? "buildingDecreasingHD.jpg" : "buildingDecreasing.jpg"), TEXTURE_BUILDING_DECREASING);
 		virus.init(Config::get(TEXTURES_PATH) + (Config::get(HD_TEXTURES_ENABLED) ? "virusHD.png" : "virus.jpg"), TEXTURE_VIRUS);
 		virusWounded.init(Config::get(TEXTURES_PATH) + (Config::get(HD_TEXTURES_ENABLED) ? "virusWounded.png" : "virusWoundedHD.png"), TEXTURE_VIRUS_WOUNDED);
 		fire.init(Config::get(TEXTURES_PATH) + (Config::get(HD_TEXTURES_ENABLED) ? "fire.png" : "fireHD.png"), TEXTURE_FIRE);
@@ -95,6 +88,8 @@ public:
 		ground.use();
 		sun.use();
 		building.use();
+		buildingGrowing.use();
+		buildingDecreasing.use();
 		virus.use();
 		virusWounded.use();
 		fire.use();
@@ -130,6 +125,8 @@ Texture Texture::shotgun;
 Texture Texture::ground;
 Texture Texture::sun;
 Texture Texture::building;
+Texture Texture::buildingGrowing;
+Texture Texture::buildingDecreasing;
 Texture Texture::virus;
 Texture Texture::virusWounded;
 Texture Texture::fire;

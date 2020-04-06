@@ -10,13 +10,18 @@
 #include "Primitives.h"
 #include "Virus.h"
 #include "Sun.h"
+#include "Building.h"
+#include "BuildingsMap.h"
 
 class World : public InputHandler {
 private:
 	Camera globalCamera;
 	Player player;
 	
+	BuildingsMap buildingsMap;
+
 	vector <GameObject*> objects;
+	vector <Building*> buildings;
 	vector <Virus*> viruses;
 	Sun* sun;
 	Light light;
@@ -27,8 +32,9 @@ public:
 	World() {
 		globalCamera = Camera(vec3(0, 10, 10));
 
-		int rows = 20;
-		int columns = 20;
+		//ALERT obowiazkowo parzyste! nie wiem czemu inaczej nie dziala
+		int rows = 8;
+		int columns = 8;
 
 		float step = 40.0;
 
@@ -36,10 +42,12 @@ public:
 
 		for (int r = 0; r < rows; r++) {
 			for (int c = 0; c < columns; c++) {
-				GameObject* object = new GameObject(Primitives::getCube(), TEXTURE_GROUND, vec3(r * step - distance/2, 20.0, c * step - distance/2), Config::get(DEFAULT_BUILDING_DIMENSIONS));
-				objects.push_back(object);
+				Building* building = new Building(vec3(float(r) * step - distance / 2.0, Config::get(DEFAULT_BUILDING_DIMENSIONS).y / 2.0, float(c) * step - distance / 2.0));
+				buildings.push_back(building);
 			}
 		}
+
+		buildingsMap.init(buildings, step);
 
 		step = 2;
 		distance = rows * step;
@@ -84,6 +92,17 @@ public:
 		//	object->rotate(0, angle, 0);
 		//}
 
+		Building* building = buildingsMap.getNearBuilding(&player);
+
+		if (building != NULL) {
+			building->startGrowth();
+			player.handleCollision(building);
+		}
+
+		for (auto& building : buildings) {
+			building->update();
+		}
+
 		for (auto& virus : viruses) {
 			virus->lookAtPlayer(getActiveCamera());
 		}
@@ -99,6 +118,10 @@ public:
 		
 		for (GameObject* object : objects) {
 			Renderer::addToQueue(object->getMesh());
+		}
+
+		for (auto& building : buildings) {
+			Renderer::addToQueue(building->getMesh());
 		}
 
 		for (Virus* virus : viruses) {

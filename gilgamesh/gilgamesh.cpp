@@ -49,8 +49,6 @@ int main(int argc, char** argv)
 		mouse.readInput();
 		keyboard.readInput();
 		
-		//world.handleInput(mouse, keyboard);
-
 		Renderer::clear();
 
 

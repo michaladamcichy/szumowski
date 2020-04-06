@@ -15,7 +15,7 @@ in vec3 normal;
 in vec4 fragmentPosition;
 in float textureId;
 
-uniform sampler2D textures[7];
+uniform sampler2D textures[9];
 uniform sampler2D texture1;
 uniform sampler2D texture2;
 

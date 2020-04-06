@@ -128,6 +128,12 @@
     <ClInclude Include="Sun.h">
       <Filter>Header Files\nonstatic</Filter>
     </ClInclude>
+    <ClInclude Include="BuildingsMap.h">
+      <Filter>Header Files\nonstatic</Filter>
+    </ClInclude>
+    <ClInclude Include="Building.h">
+      <Filter>Header Files\nonstatic</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="Uwagi.txt">

@@ -19,6 +19,7 @@ private:
 	vector <uint> indices;
 
 	TextureType texture;
+	bool textureChanged = false;
 
 public:
 	Mesh() {}
@@ -44,7 +45,10 @@ public:
 	}
 
 	void setTexture(TextureType texture) {
-		this->texture = texture;
+		if (this->texture != texture) {
+			textureChanged = true;
+			this->texture = texture;
+		}
 	}
 
 	vector <Vertex>& getVertices() {
@@ -72,6 +76,11 @@ public:
 				vertices[i].position = vec3(transformation * vec4(origin->getVertices()[i].position, 1.0));
 				vertices[i].normal = rotations * normalize(origin->getVertices()[i].normal);
 			}
+		}
+
+		if (textureChanged) {
+			updateTexture(texture);
+			textureChanged = false;
 		}
 	}
 };

@@ -21,7 +21,8 @@ enum ConfigFloat {
 	CAMERA_MAX_PITCH,
 	CAMERA_SPEED,
 	CAMERA_BOOST,
-	SUN_SIZE
+	SUN_SIZE,
+	PLAYER_RADIUS
 };
 
 enum ConfigInt {
@@ -99,6 +100,7 @@ public:
 		floats[CAMERA_SPEED] = 0.1;
 		floats[CAMERA_BOOST] = 5;
 		floats[SUN_SIZE] = 1000;
+		floats[PLAYER_RADIUS] = 1.0;
 
 		bools[LOG_ENABLED] = true;
 		bools[DYNAMIC_RENDERING_ENABLED] = true;

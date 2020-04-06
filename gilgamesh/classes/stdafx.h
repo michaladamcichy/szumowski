@@ -12,6 +12,8 @@
 #include<map>
 #include<unordered_map>
 #include<cstdlib>
+#include<cmath>
+#include<algorithm>
 
 
 #include<glad/glad.h>
@@ -35,6 +37,8 @@ using std::ifstream;
 using std::getline;
 using std::mutex;
 using std::thread;
+using std::max;
+using std::min;
 
 #define hashmap std::unordered_map;
 

@@ -7,6 +7,7 @@ class Player {
 public:
 	Camera camera;
 	vec3 position;
+	float radius;
 	float height = 2;
 
 	bool isShooting = false;
@@ -16,13 +17,18 @@ public:
 public:
 	Player() {
 		position = Config::get(PLAYER_INITIAL_POSITION);
+		radius = Config::get(PLAYER_RADIUS);
 		vec3 cameraTranslation = position;
 		cameraTranslation.y = height;
 		camera.move(cameraTranslation);
 	}
 
-	vec2 getPosition() {
-		return vec2(position.x, position.z);
+	vec3 getPosition() {
+		return position;
+	}
+
+	float getRadius() {
+		return radius;
 	}
 
 	Camera& getCamera() {
@@ -66,10 +72,43 @@ public:
 		else {
 			isShooting = false;
 		}
-		
+
 		vec3 cameraPosition = position;
 		cameraPosition.y = height;
 		camera.setPosition(cameraPosition);
 	}
+
+	void handleCollision(GameObject* object)
+	{
+		float objectMinX = object->getPosition().x - object->getDimensions().x / 2.0f;
+		float objectMinZ = object->getPosition().z - object->getDimensions().z / 2.0f;
+		float objectMaxX = object->getPosition().x + object->getDimensions().x / 2.0f;
+		float objectMaxZ = object->getPosition().z + object->getDimensions().z / 2.0f;
+
+		float closestX = glm::clamp(position.x, objectMinX, objectMaxX);
+		float closestZ = glm::clamp(position.z, objectMinZ, objectMaxZ);
+		float dx = position.x - closestX;
+		float dz = position.z - closestZ;
+		float distSquared = dx * dx + dz * dz;
+		float rSquared = radius * radius;
+
+		// if closest object point overlaps with player circle
+		if (distSquared < rSquared)
+		{
+			if (std::abs(dx) > std::abs(dz))
+			{
+				// correct by x
+				float sign = (dx > 0.0f) ? 1.0f : -1.0f;
+				this->position.x = closestX + sign * std::sqrt(rSquared - dz * dz);
+			}
+			else
+			{
+				// correct by z
+				float sign = (dz > 0.0f) ? 1.0f : -1.0f;
+				this->position.z = closestZ + sign * std::sqrt(rSquared - dx * dx);
+			}
+		}
+	}
+
 private:
 };
