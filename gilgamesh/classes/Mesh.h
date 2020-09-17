@@ -69,7 +69,7 @@ public:
 		mat3 rotations = mat3(transpose(inverse(transformation)));
 		if (origin == NULL) {
 			Log::print("Trying to modify origin!");
-			assert(!"Trying to modify origin");
+			assert(!"Trying to modify origin"); //ALERT Czy dzia³a?
 		}
 		else {
 			for (int i = 0; i < origin->getVertices().size(); i++) {

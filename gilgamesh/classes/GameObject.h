@@ -34,7 +34,7 @@ public:
 
 	void update() {
 		mat4 transformation = glm::translate(mat4(1), position) *
-			glm::rotate(mat4(1), yaw, Directions::Y_AXIS) * //ALERT - czemu dla tej kolejnoœci obrotów sprite dziala??
+			glm::rotate(mat4(1), yaw, Directions::Y_AXIS) *
 			glm::rotate(mat4(1), pitch, Directions::X_AXIS) *
 			glm::rotate(mat4(1), roll, Directions::Z_AXIS) *
 			glm::scale(mat4(1), dimensions);

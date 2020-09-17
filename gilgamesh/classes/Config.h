@@ -80,7 +80,7 @@ public:
 		ints[SCREEN_WIDTH] = 1920;
 		ints[SCREEN_HEIGHT] = 1080;
 		ints[TOGGLE_KEY_INERTIA] = 100;
-		ints[FRAME_DELAY] = 5;
+		ints[FRAME_DELAY] = 1;
 		ints[TIME_MEASUREMENT_FREQUENCY] = 100;
 		ints[THREADS_COUNT] = 12;
 
