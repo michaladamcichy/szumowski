@@ -48,7 +48,7 @@ void main()
 	float ambient = light.ambient;
 	float diffuse = max(dot(normal, -light.direction), 0.0);
 
-	vec4 output = vec4(textureColor.xyz * (ambient + diffuse) * depth, textureColor.a);
-	//vec4 output = vec4(normal * depth, textureColor.a);
-	FragColor = output;
+	vec4 final = vec4(textureColor.xyz * (ambient + diffuse) * depth, textureColor.a);
+	//vec4 final = vec4(normal * depth, textureColor.a);
+	FragColor = final;
 }
