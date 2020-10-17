@@ -2,7 +2,7 @@
 
 #include "stdafx.h"
 
-namespace Colors {
+class Colors {
 	const vec3 WHITE = vec3(1.0, 1.0, 1.0);
 	const vec3 BLACK = vec3(0.0, 0.0, 0.0);
 

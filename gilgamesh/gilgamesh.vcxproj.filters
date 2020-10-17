@@ -44,95 +44,92 @@
     <ClInclude Include="classes\stdafx.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="classes\Config.h">
-      <Filter>Header Files\static</Filter>
-    </ClInclude>
-    <ClInclude Include="classes\Constants.h">
-      <Filter>Header Files\static</Filter>
-    </ClInclude>
-    <ClInclude Include="classes\ErrorHandler.h">
-      <Filter>Header Files\static</Filter>
-    </ClInclude>
-    <ClInclude Include="classes\GLFW.h">
-      <Filter>Header Files\static</Filter>
-    </ClInclude>
-    <ClInclude Include="classes\Importer.h">
-      <Filter>Header Files\static</Filter>
-    </ClInclude>
-    <ClInclude Include="classes\Log.h">
-      <Filter>Header Files\static</Filter>
-    </ClInclude>
-    <ClInclude Include="classes\MathsUtils.h">
-      <Filter>Header Files\static</Filter>
-    </ClInclude>
-    <ClInclude Include="classes\Primitives.h">
-      <Filter>Header Files\static</Filter>
-    </ClInclude>
-    <ClInclude Include="classes\Renderer.h">
-      <Filter>Header Files\static</Filter>
-    </ClInclude>
-    <ClInclude Include="classes\Vertex.h">
-      <Filter>Header Files\structures</Filter>
-    </ClInclude>
-    <ClInclude Include="classes\TimeManager.h">
-      <Filter>Header Files\static</Filter>
-    </ClInclude>
-    <ClInclude Include="classes\Camera.h">
-      <Filter>Header Files\nonstatic</Filter>
-    </ClInclude>
-    <ClInclude Include="classes\GameObject.h">
-      <Filter>Header Files\nonstatic</Filter>
-    </ClInclude>
-    <ClInclude Include="classes\Mesh.h">
-      <Filter>Header Files\nonstatic</Filter>
-    </ClInclude>
-    <ClInclude Include="classes\Keyboard.h">
-      <Filter>Header Files\nonstatic</Filter>
-    </ClInclude>
-    <ClInclude Include="classes\World.h">
-      <Filter>Header Files\nonstatic</Filter>
-    </ClInclude>
-    <ClInclude Include="classes\Texture.h">
-      <Filter>Header Files\nonstatic</Filter>
-    </ClInclude>
-    <ClInclude Include="classes\Shader.h">
-      <Filter>Header Files\nonstatic</Filter>
-    </ClInclude>
-    <ClInclude Include="classes\Player.h">
-      <Filter>Header Files\nonstatic</Filter>
-    </ClInclude>
-    <ClInclude Include="classes\Mouse.h">
-      <Filter>Header Files\nonstatic</Filter>
-    </ClInclude>
-    <ClInclude Include="Colors.h">
-      <Filter>Header Files\static</Filter>
-    </ClInclude>
     <ClInclude Include="Drawable.h">
       <Filter>Header Files\interfaces</Filter>
     </ClInclude>
     <ClInclude Include="InputHandler.h">
       <Filter>Header Files\interfaces</Filter>
     </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>Header Files\nonstatic</Filter>
+    </ClInclude>
+    <ClInclude Include="EventHandler.h">
+      <Filter>Header Files\nonstatic</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject.h">
+      <Filter>Header Files\nonstatic</Filter>
+    </ClInclude>
+    <ClInclude Include="Importer.h">
+      <Filter>Header Files\static</Filter>
+    </ClInclude>
+    <ClInclude Include="Keyboard.h">
+      <Filter>Header Files\nonstatic</Filter>
+    </ClInclude>
     <ClInclude Include="Light.h">
       <Filter>Header Files\nonstatic</Filter>
     </ClInclude>
-    <ClInclude Include="Directions.h">
-      <Filter>Header Files\static</Filter>
+    <ClInclude Include="Mesh.h">
+      <Filter>Header Files\nonstatic</Filter>
+    </ClInclude>
+    <ClInclude Include="Mouse.h">
+      <Filter>Header Files\nonstatic</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Header Files\nonstatic</Filter>
     </ClInclude>
     <ClInclude Include="RenderBuffer.h">
       <Filter>Header Files\nonstatic</Filter>
     </ClInclude>
-    <ClInclude Include="Virus.h">
+    <ClInclude Include="Shader.h">
       <Filter>Header Files\nonstatic</Filter>
     </ClInclude>
     <ClInclude Include="Sun.h">
       <Filter>Header Files\nonstatic</Filter>
     </ClInclude>
-    <ClInclude Include="BuildingsMap.h">
+    <ClInclude Include="Texture.h">
       <Filter>Header Files\nonstatic</Filter>
     </ClInclude>
-    <ClInclude Include="Building.h">
+    <ClInclude Include="Virus.h">
       <Filter>Header Files\nonstatic</Filter>
+    </ClInclude>
+    <ClInclude Include="World.h">
+      <Filter>Header Files\nonstatic</Filter>
+    </ClInclude>
+    <ClInclude Include="Vertex.h">
+      <Filter>Header Files\structures</Filter>
+    </ClInclude>
+    <ClInclude Include="TimeManager.h">
+      <Filter>Header Files\static</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer.h">
+      <Filter>Header Files\static</Filter>
+    </ClInclude>
+    <ClInclude Include="Primitives.h">
+      <Filter>Header Files\static</Filter>
+    </ClInclude>
+    <ClInclude Include="MathsUtils.h">
+      <Filter>Header Files\static</Filter>
+    </ClInclude>
+    <ClInclude Include="Log.h">
+      <Filter>Header Files\static</Filter>
+    </ClInclude>
+    <ClInclude Include="GLFW.h">
+      <Filter>Header Files\static</Filter>
+    </ClInclude>
+    <ClInclude Include="ErrorHandler.h">
+      <Filter>Header Files\static</Filter>
+    </ClInclude>
+    <ClInclude Include="Directions.h">
+      <Filter>Header Files\static</Filter>
+    </ClInclude>
+    <ClInclude Include="Constants.h">
+      <Filter>Header Files\static</Filter>
+    </ClInclude>
+    <ClInclude Include="Config.h">
+      <Filter>Header Files\static</Filter>
+    </ClInclude>
+    <ClInclude Include="Colors.h">
+      <Filter>Header Files\static</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
