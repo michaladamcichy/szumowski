@@ -25,6 +25,13 @@ public:
 		if (frameCounter++ == Config::get(TIME_MEASUREMENT_FREQUENCY)+1) {
 			frameCounter = 0;
 		}
+
+		if (frameCounter == Config::get(TIME_MEASUREMENT_FREQUENCY)) {
+			double avgFrameDuration = (finalCpu + finalGpu + finalRendering) / Config::get(TIME_MEASUREMENT_FREQUENCY);
+			
+			Log::newLine();
+			Log::print("FPS", int(1.0 / avgFrameDuration));
+		}
 	}
 
 	static double getFrameDuration() {

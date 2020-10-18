@@ -39,9 +39,15 @@ public:
 			}
 		}
 
+		/*for (int r = 0; r < rows; r++) {
+			for (int c = 0; c < columns; c++) {
+				objects.push_back(new GameObject(Primitives::getCube(), TEXTURE_GROUND, vec3(r * step - distance / 2, 1.0, c * step - distance / 2), vec3(3, 3, 3)));
+			}
+		}*/
+
 
 		GameObject* ground = new GameObject(Primitives::getQuad(), TEXTURE_FIRE, vec3(0,0,0), Config::get(GROUND_DIMENSIONS));
-		ground->rotatePitch(Constants::HALF_PI);
+		ground->rotatePitch(-Constants::HALF_PI);
 
 		objects.push_back(ground);
 
@@ -70,6 +76,10 @@ public:
 
 	void draw() {
 		Renderer::attachCamera(this->getActiveCamera());
+
+		Camera lightCamera = globalCamera;
+		Light temp(lightCamera.getPosition(), lightCamera.getDirection(), Colors::WHITE, 0.0);
+		light = temp;
 		Renderer::attachLight(&light);
 		
 		for (GameObject* object : objects) {

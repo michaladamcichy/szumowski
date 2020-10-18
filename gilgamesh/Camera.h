@@ -73,6 +73,14 @@ public:
 		updateVectors();
 	}
 
+	vec3 createRelativePoint(vec3 vec) { //ALERT NOT TESTED
+		return vec3(getTransformation() * vec4(vec, 1.0f));
+	}
+
+	vec3 createRelativeDirection(vec3 vec) { //ALERT NOT TESTED
+		return vec3(getRotations() * vec4(vec, 1.0f));
+	}
+
 	void handleInput(Mouse& mouse, Keyboard& keyboard) {
 		this->rotate(-mouse.getMovement().y * Config::get(MOUSE_SENSITIVITY), mouse.getMovement().x * Config::get(MOUSE_SENSITIVITY));
 
@@ -102,7 +110,7 @@ public:
 	}
 
 	vec3 getDirection() {
-		return front;
+		return normalize(front);
 	}
 
 	float getPitch() {
@@ -114,19 +122,19 @@ public:
 	}
 
 	vec3 getFront() {
-		return front;
+		return normalize(front); //ALERT NOT NECESSARY
 	}
 
 	vec3 getRight() {
-		return right;
+		return normalize(right);
 	}
 
 	vec3 getLeft() {
-		return -right;
+		return normalize(-right);
 	}
 
 	vec3 getBack() {
-		return -front;
+		return normalize(-front);
 	}
 
 private:

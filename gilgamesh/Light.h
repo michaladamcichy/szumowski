@@ -32,7 +32,7 @@ public:
 	}
 
 	vec3 getDirection() {
-		return direction;
+		return normalize(direction); //ALERT
 	}
 
 	vec3 getColor() {

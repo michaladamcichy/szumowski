@@ -16,7 +16,7 @@ void main() {
 	gl_Position = cameraTransformation * vec4(inPosition, 1.0);
 	
 	uv = inUv;
-	normal = inNormal;
+	normal = normalize(inNormal); //necessary?
 	fragmentPosition = vec4(inPosition, 1.0);
 	textureId = inTexture;
 };

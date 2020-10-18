@@ -47,8 +47,14 @@ void main()
 
 	float ambient = light.ambient;
 	float diffuse = max(dot(normal, -light.direction), 0.0);
+	
+	vec3 fragmentTowardsCamera = normalize(vec3(cameraPosition) - vec3(fragmentPosition));
+	vec3 fragmentTowardsLight = normalize(-reflect(-light.direction, normal));
+	
+	float specular = pow(max(dot(fragmentTowardsCamera, fragmentTowardsLight), 0.0), 32); //ALERT hardcoded specular
 
-	vec4 final = vec4(textureColor.xyz * (ambient + diffuse) * depth, textureColor.a);
-	//vec4 final = vec4(normal * depth, textureColor.a);
+	vec4 final = vec4(textureColor.xyz * (diffuse + specular) * depth, textureColor.a);
+	
+	//vec4 final = vec4(vec3(abs(normal.x), abs(normal.y), abs(normal.z)) * depth, textureColor.a);
 	FragColor = final;
 }

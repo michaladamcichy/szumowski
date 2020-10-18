@@ -26,10 +26,21 @@ public:
 		}
 	}
 
+	static void print(string message, double value) {
+		if (enabled == true) {
+			cout << message << "->" << value << '\n';
+		}
+	}
+
+
 	template <class X, class Y> static void print(pair<X, Y> keyValue) {
 		if (enabled == true) {
 			cout << keyValue.first << " -> " << keyValue.second << '\n';
 		}
+	}
+
+	static void newLine() {
+		print("\n");
 	}
 
 	static void done() {

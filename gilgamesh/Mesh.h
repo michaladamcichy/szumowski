@@ -74,7 +74,7 @@ public:
 		else {
 			for (int i = 0; i < origin->getVertices().size(); i++) {
 				vertices[i].position = vec3(transformation * vec4(origin->getVertices()[i].position, 1.0));
-				vertices[i].normal = rotations * normalize(origin->getVertices()[i].normal);
+				vertices[i].normal = normalize(rotations * origin->getVertices()[i].normal); //ALERT usunac nadimarowe normalizacje
 			}
 		}
 

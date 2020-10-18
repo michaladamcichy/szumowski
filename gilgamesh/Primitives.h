@@ -61,10 +61,10 @@ public:
 
 		quad = new Mesh(
 			vector <Vertex> {
-				Vertex(vec3(0.5f, 0.5f, 0.0f), vec2(1.0f, 1.0f), vec3(0, 0, 1), 0),
-				Vertex(vec3(0.5f, -0.5f, 0.0f), vec2(1.0f, 0.0f), vec3(0, 0, 1), 0),
-				Vertex(vec3(-0.5f, -0.5f, 0.0f), vec2(0.0f, 0.0f), vec3(0, 0, 1), 0),
-				Vertex(vec3(-0.5f, 0.5f, 0.0f), vec2(0.0f, 1.0f), vec3(0, 0, 1), 0)
+				Vertex(vec3(0.5f, 0.5f, 0.0f), vec2(1.0f, 1.0f), vec3(0.0f, 0.0f, 1.0f), 0.0f),
+				Vertex(vec3(0.5f, -0.5f, 0.0f), vec2(1.0f, 0.0f), vec3(0.0f, 0.0f, 1.0f), 0.0f),
+				Vertex(vec3(-0.5f, -0.5f, 0.0f), vec2(0.0f, 0.0f), vec3(0.0f, 0.0f, 1.0f), 0.0f),
+				Vertex(vec3(-0.5f, 0.5f, 0.0f), vec2(0.0f, 1.0f), vec3(0.0f, 0.0f, 1.0f), 0.0f)
 			},
 			vector <unsigned int> {
 				0, 1, 3,

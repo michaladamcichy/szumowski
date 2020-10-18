@@ -4,10 +4,10 @@
 #include "Primitives.h"
 #include "Player.h"
 
-class Virus : public GameObject {
+class Sprite : public GameObject {
 private:
 public:
-	Virus(vec3 position) : GameObject(Primitives::getQuad(), TEXTURE_VIRUS, position, Config::get(VIRUS_DIMENSIONS)) {
+	Sprite(int texture, vec3 position, vec3 dimensions) : GameObject(Primitives::getQuad(), texture, position, dimensions) {
 	}
 
 	void lookAtPlayer(Camera* camera) {
